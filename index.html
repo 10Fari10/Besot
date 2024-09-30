@@ -7,7 +7,20 @@
         <hr>
         <div class="box">Welcome! This is a website for anyone in the 716 area to share cool hangout spots. From a cool part of a park 
             to a street with a nice view. To make a review hit the button at the bottom right: upload a clear picture, then put the adress, your rating, and quick review of your spot!</div>
-            <button class="circle"></button>
+            <button class="circle" onclick="popUp()"></button>
+            <div class="popbox" id="AddPost">
+                <form action="/media-uploads" class="popoverlay">
+                    <input type="file">
+                    <br>
+                    <input type="text">
+                    <br>
+                    <input type="range" min="0" max="5">
+                    <br>
+                    <input type="text">
+                    <br>
+                    <input type="Submit">
+                </div>
+            </div>
         </body>
     <script src="script.js"></script>
 </html>

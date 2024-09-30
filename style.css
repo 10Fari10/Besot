@@ -34,6 +34,24 @@ hr{
   height: 100px;
   border-radius: 50%;
   position: fixed;
-  bottom: 5;
-  right: 5;
+  bottom: 30;
+  right: 10;
+}
+.popbox{
+  display: none;
+  position: fixed;
+  width: 400px;
+  height: 350px;
+  background-color: white;
+  font-family: "Open Sans", sans-serif;
+  font-size: 25px;
+}
+.popoverlay{
+  background-color: white;
+  width:800px;
+  border-color: white;
+  border-radius: 2.5px;
+  height:500px;
+
+
 }
