@@ -1,6 +1,14 @@
 body{
   background-image: linear-gradient(to right top, #1500ff, #6547ff, #8f73ff, #b29dff, #d3c7ff, #e1cafe, #edcdfd, #f8d1fc, #ffa6e0, #ff75ad, #ff3d66, #ff0000);
 }
+.bodcontainer{
+  width:98%;
+  height:90%;
+  background-image:linear-gradient(to bottom, #ffffff, #f8f8ff, #f0f1ff, #e7eaff, #dce4ff);
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #logobox{
   width: 97%;
   height: 100px;
@@ -47,11 +55,31 @@ hr{
   font-size: 25px;
 }
 .popoverlay{
+  position: fixed;
+  top: 25%;
+  left: 25%;
   background-color: white;
   width:800px;
   border-color: white;
   border-radius: 2.5px;
   height:500px;
-
-
+}
+.logbox{
+  display: none;
+  position: fixed;
+  width: 400px;
+  height: 350px;
+  background-color: white;
+  font-family: "Open Sans", sans-serif;
+  font-size: 25px;
+}
+.logoverlay{
+  position: fixed;
+  top: 25%;
+  left: 25%;
+  background-color: white;
+  width:800px;
+  border-color: white;
+  border-radius: 2.5px;
+  height:500px;
 }
