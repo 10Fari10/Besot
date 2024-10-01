@@ -3,6 +3,13 @@ const l_aVal=document.getElementById("l_aVal");
 const ratingVal=document.getElementById("ratingVal");
 const revVal=document.getElementById("revVal");
 const ap=document.getElementById("AddPost");
+const lp=document.getElementById("logging");
+const sp=document.getElementById("signing");
+const useVal=document.getElementById("useVal");
+const passVal=document.getElementById("passVal");
+const suseVal=document.getElementById("suseVal");
+const spassVal1=document.getElementById("spassVal1");
+const spassVal2=document.getElementById("spassVal2");
 function popUp(){
 ap.style.display="block";
 }
@@ -18,30 +25,27 @@ function submission(){
     //must take these value and generate a post with them
 }
 function logme(){
-    ap.style.display="block";
+    lp.style.display="block";
     }
     function logDown(){
-        ap.style.display="none";
+        lp.style.display="none";
         }
     function log_me_in(){
-        const pic=picVal.value;
-        const l_a=l_aVal.value;
-        const rate=ratingVal.value;
-        const rev=revVal.value;
+        const user=useVal.value;
+        const password=passVal.value;
         logDown();
-        //must take these value and generate a post with them
+        //must be used for auth
     }
     function signme(){
-        ap.style.display="block";
+        sp.style.display="block";
         }
         function signDown(){
-            ap.style.display="none";
+            sp.style.display="none";
             }
         function sign_me_in(){
-            const pic=picVal.value;
-            const l_a=l_aVal.value;
-            const rate=ratingVal.value;
-            const rev=revVal.value;
+            const n_user=suseVal.value;
+            const n_p_1=spassVal1.value;
+            const n_p_2=spassVal2;
             signDown();
-            //must take these value and generate a post with them
+            //must be used for auth
         }

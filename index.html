@@ -5,16 +5,30 @@
         <button onclick="logme()">Login</button><button onclick="signme()">Sign-In</button>
         <div class="logbox" id="logging">
         <form>
+            <button onclick="logDown()">&times;</button>
+            <br>
             <input type="text" placeholder="User Name">
+            <br>
+            <hr>
             <input type="text" placeholder="Password">
+            <br>
+            <hr>
             <button onclick="log_me_in()"></button>
         </form>
         </div>
-        <div class="signbox" id="signing">
+        <div class="logbox" id="signing">
             <form>
+                <button onclick="signDown">&times;</button>
+                <br>
             <input type="text" placeholder="User Name">
+            <br>
+            <hr>
             <input type="text" placeholder="Password">
+            <br>
+            <hr>
             <input type="text" placeholder="Retype Password">
+            <br>
+            <hr>
             <button onclick="sign_me_in()"></button>
         </form>
         </div>

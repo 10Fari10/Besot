@@ -74,7 +74,7 @@ hr{
   font-size: 25px;
 }
 .logoverlay{
-  position: fixed;
+   position: fixed;
   top: 25%;
   left: 25%;
   background-color: white;
