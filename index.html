@@ -11,12 +11,12 @@
             <hr>
             <button onclick="logDown()" class="x">&times;</button>
             <br>
-            <input type="text" placeholder="User Name" class="input">
+            <input type="text" placeholder="User Name" class="input" id="useVal">
             <br>
             <hr>
             <br>
             <hr>
-            <input type="text" placeholder="Password" class="input">
+            <input type="text" placeholder="Password" class="input" id="passVal">
             <br>
             <hr>
             <hr>
@@ -30,17 +30,17 @@
             <form>
                 <button onclick="signDown" class="x">&times;</button>
                 <br>
-            <input type="text" placeholder="User Name" class="input">
+            <input type="text" placeholder="User Name" class="input" id="suseVal">
             <br>
             <hr>
             <br>
             <hr>
-            <input type="text" placeholder="Password" class="input">
+            <input type="text" placeholder="Password" class="input" id="spassVal1">
             <br>
             <hr>
             <br>
             <hr>
-            <input type="text" placeholder="Re-type Password" class="input">
+            <input type="text" placeholder="Re-type Password" class="input" id="spassVal2">
             <br>
             <hr>
             <hr>
@@ -70,16 +70,28 @@
                     <input type="file" id="picVal" class="pbutton">
                     <br>
                     <hr>
+                    <br>
+                    
                     <input type="text" placeholder="Location/Adress" id="l_aVal" class="pinput">
                     <br>
                     <hr>
-                    <input type="range" min="0" max="5" id="ratingVal" class="hue">
                     <br>
+                    
+                    <input type="range" min="0" max="5" id="ratingVal" class="hue">
+            
                     <hr>
+                    <br>
+                   
                     <input type="text" placeholder="Leave You Review Here" id="revVal" class="pinput">
                     <br>
                     <hr>
-                    <input type="Submit" onclick="submission()" class="pbutton">
+                    <br>
+    
+                    <input type="Submit" onclick="submission()" class="pbutton" placeholder="Submit">
+                    <br>
+                    <hr>
+                    <br>
+                    <input type="Reset" class="pbutton" placeholder="Reset">
                 </div>
             </div>
         </body>

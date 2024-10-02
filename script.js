@@ -21,7 +21,22 @@ function submission(){
     const l_a=l_aVal.value;
     const rate=ratingVal.value;
     const rev=revVal.value;
+    
+    if(pic==''){
+        alert("Please upload a png/jpg/jpeg.");
+        }
+    if(l_a==''){
+        alert("Please enter a location/adress.");
+    }
+    if(rev==''){
+        alert("Please enter a review.");
+    }
+    //enter value to database here
+    picVal.value='';
+    l_aVal.value='';
+    revVal.value='';
     popDown();
+    
     //must take these value and generate a post with them
 }
 function logme(){
@@ -30,9 +45,19 @@ function logme(){
     function logDown(){
         lp.style.display="none";
         }
+
     function log_me_in(){
         const user=useVal.value;
         const password=passVal.value;
+        if(user==''){
+            alert("Please enter a username.");
+            }
+        if(password==''){
+            alert("Please enter a password.");
+        }
+        //enter value to database here
+        user.value='';
+        password.value='';
         logDown();
         //must be used for auth
     }
@@ -45,7 +70,23 @@ function logme(){
         function sign_me_in(){
             const n_user=suseVal.value;
             const n_p_1=spassVal1.value;
-            const n_p_2=spassVal2;
+            const n_p_2=spassVal2.value;
+            if(n_user==''){
+                alert("Please enter a username.");
+                }
+            if(n_p_1==''){
+                alert("Please enter a password.");
+            }
+            if(n_p_2==''){
+                alert("Please re-type password.");
+            }
+            if(n_p_1!=n_p_2 && (n_p_1!='')&&(n_p_2!='')){
+                alert("Password don't match please try again!");
+            }
+            //enter value to database here
+            n_user.value='';
+            n_p_1.value='';
+            n_p_2.value='';
             signDown();
             //must be used for auth
         }

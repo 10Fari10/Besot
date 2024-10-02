@@ -143,6 +143,7 @@ right:1%;
   border-color: white;
   border-style: solid;
   font-family: "Abril Fatface", serif;
+  left:10%;
   color:white;
 }
 .pbutton{
@@ -152,10 +153,13 @@ right:1%;
   border-color: white;
   border-style: solid;
   position: absolute;
+  left:30%;
   font-family: "Abril Fatface", serif;
   color:white;
 }
 .hue{
 accent-color: white;
 width:350px;
+position: absolute;
+left:25%;
 }
