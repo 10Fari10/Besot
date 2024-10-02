@@ -1,12 +1,15 @@
 body{
-  background-image: linear-gradient(to right top, #1500ff, #6547ff, #8f73ff, #b29dff, #d3c7ff, #e1cafe, #edcdfd, #f8d1fc, #ffa6e0, #ff75ad, #ff3d66, #ff0000);
+  background-color: black;
 }
 .bodcontainer{
   width:98%;
-  height:90%;
-  background-image:linear-gradient(to bottom, #ffffff, #f8f8ff, #f0f1ff, #e7eaff, #dce4ff);
+  height:100%;
+  background-image: linear-gradient(to top, #000430, #130025, #18001b, #170011, #110008, #0e0005, #0a0003, #050001, #090001, #0c0002, #0f0001, #120001);
   margin-left: auto;
+  border-color: white;
+  border-style: solid;
   margin-right: auto;
+  border-radius: 1.5px;
 }
 
 #logobox{
@@ -14,6 +17,8 @@ body{
   height: 100px;
   background-image: url("Logo1.png");
   background-size: cover;
+  border-color: white;
+  border-style: solid;
   border-radius: 2.5px;
   margin-left: auto;
   margin-right: auto;
@@ -25,9 +30,11 @@ hr{
 .box{
   width: 90%;
   height: 125px;
-  background-color: white;
+  border-color: white;
+  border-style: solid;
+  color:white;
   border-radius: 2.5px;
-  font-family: "Open Sans", sans-serif;
+  font-family: "Abril Fatface", serif;
   font-size: 25px;
   
   text-align: center;
@@ -36,8 +43,7 @@ hr{
 }
 .circle{
   background-image: url("plus.png");
-  background-color: white;
-  border-color: white;
+  border-style: solid;
   width: 100px;
   height: 100px;
   border-radius: 50%;
@@ -50,36 +56,106 @@ hr{
   position: fixed;
   width: 400px;
   height: 350px;
-  background-color: white;
-  font-family: "Open Sans", sans-serif;
+  background-color: black;
+  border-color: white;
+  border-style: solid;
   font-size: 25px;
 }
 .popoverlay{
   position: fixed;
   top: 25%;
   left: 25%;
-  background-color: white;
-  width:800px;
+  background-color: black;
   border-color: white;
-  border-radius: 2.5px;
+  border-style: solid;
+  width:800px;
   height:500px;
 }
 .logbox{
+  position: fixed;
+  top: 25%;
+  left: 35%;
   display: none;
   position: fixed;
   width: 400px;
   height: 350px;
-  background-color: white;
-  font-family: "Open Sans", sans-serif;
-  font-size: 25px;
-}
-.logoverlay{
-   position: fixed;
-  top: 25%;
-  left: 25%;
-  background-color: white;
-  width:800px;
+  background-color: black;
   border-color: white;
-  border-radius: 2.5px;
-  height:500px;
+  border-style: solid;
+}
+
+.logbutton{
+  
+  position: absolute;
+  background-color:#00338d;
+  color:white;
+  font-family: "Abril Fatface", serif;
+  border-style:solid;
+  border-color:#00338d;
+  right:5.5%;
+}
+.signbutton{
+  position: absolute;
+  background-color:#C60C30;
+  color:white;
+  font-family: "Abril Fatface", serif;
+  border-style:solid;
+  border-color:#C60C30;
+right:1%;
+}
+.x{
+  position: absolute;
+  right:1%;
+  top:2%;
+  background-color: black;
+  border-color: white;
+  border-style: solid;
+  font-family: "Abril Fatface", serif;
+  color:white;
+}
+.input{
+  position: absolute;
+  left:10%;
+  height:50px;
+  width:300px;
+  background-color: black;
+  border-color: white;
+  border-style: solid;
+  font-family: "Abril Fatface", serif;
+  color:white;
+}
+.sibutton{
+  height:50px;
+  width:250px;
+  background-color: black;
+  border-color: white;
+  border-style: solid;
+  position: absolute;
+  left:15%;
+  font-family: "Abril Fatface", serif;
+  color:white;
+}
+.pinput{
+  position: absolute;
+  height:50px;
+  width:600px;
+  background-color: black;
+  border-color: white;
+  border-style: solid;
+  font-family: "Abril Fatface", serif;
+  color:white;
+}
+.pbutton{
+  height:50px;
+  width:250px;
+  background-color: black;
+  border-color: white;
+  border-style: solid;
+  position: absolute;
+  font-family: "Abril Fatface", serif;
+  color:white;
+}
+.hue{
+accent-color: white;
+width:350px;
 }

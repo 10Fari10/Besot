@@ -1,41 +1,62 @@
 <html>
     <link rel="stylesheet" type="text/css" href="style.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
     <body>
-        <button onclick="logme()">Login</button><button onclick="signme()">Sign-In</button>
+        <button onclick="logme()" class="logbutton">Login</button><button onclick="signme()" class="signbutton">Sign-In</button>
         <div class="logbox" id="logging">
         <form>
-            <button onclick="logDown()">&times;</button>
+            <hr>
+            <hr>
+            <hr>
+            <button onclick="logDown()" class="x">&times;</button>
             <br>
-            <input type="text" placeholder="User Name">
+            <input type="text" placeholder="User Name" class="input">
             <br>
             <hr>
-            <input type="text" placeholder="Password">
             <br>
             <hr>
-            <button onclick="log_me_in()"></button>
+            <input type="text" placeholder="Password" class="input">
+            <br>
+            <hr>
+            <hr>
+            <hr>
+            <br>
+            <br>
+            <button onclick="log_me_in()" class="sibutton">Log-In</button>
         </form>
         </div>
         <div class="logbox" id="signing">
             <form>
-                <button onclick="signDown">&times;</button>
+                <button onclick="signDown" class="x">&times;</button>
                 <br>
-            <input type="text" placeholder="User Name">
+            <input type="text" placeholder="User Name" class="input">
             <br>
             <hr>
-            <input type="text" placeholder="Password">
             <br>
             <hr>
-            <input type="text" placeholder="Retype Password">
+            <input type="text" placeholder="Password" class="input">
             <br>
             <hr>
-            <button onclick="sign_me_in()"></button>
+            <br>
+            <hr>
+            <input type="text" placeholder="Re-type Password" class="input">
+            <br>
+            <hr>
+            <hr>
+            <hr>
+            <br>
+            <br>
+            <button onclick="sign_me_in()" class="sibutton">Sign-Up</button>
         </form>
         </div>
-
+        <br>
+        <hr>
+        <div id="logobox"></div>
+        <br>
         <hr>
         <div class="bodcontainer">
-        <div id="logobox"></div>
+        
         <hr>
         <div class="box">Welcome! This is a website for anyone in the 716 area to share cool hangout spots. From a cool part of a park 
             to a street with a nice view. To make a review hit the button at the bottom right: upload a clear picture, then put the adress, your rating, and quick review of your spot!</div>
@@ -44,20 +65,21 @@
         <hr>
             <div class="popbox" id="AddPost">
                 <form action="/media-uploads" class="popoverlay">
-                    <button onclick="popDown()">&times;</button>
-                    <input type="file" id="picVal">
+                    <button onclick="popDown()" class="x">&times;</button>
+                    <br>
+                    <input type="file" id="picVal" class="pbutton">
                     <br>
                     <hr>
-                    <input type="text" placeholder="Location/Adress" id="l_aVal">
+                    <input type="text" placeholder="Location/Adress" id="l_aVal" class="pinput">
                     <br>
                     <hr>
-                    <input type="range" min="0" max="5" id="ratingVal">
+                    <input type="range" min="0" max="5" id="ratingVal" class="hue">
                     <br>
                     <hr>
-                    <input type="text" placeholder="Leave You Review Here" id="revVal">
+                    <input type="text" placeholder="Leave You Review Here" id="revVal" class="pinput">
                     <br>
                     <hr>
-                    <input type="Submit" onclick="submission()">
+                    <input type="Submit" onclick="submission()" class="pbutton">
                 </div>
             </div>
         </body>
