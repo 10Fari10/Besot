@@ -51,17 +51,9 @@ hr{
   bottom: 30;
   right: 10;
 }
-.popbox{
-  display: none;
-  position: fixed;
-  width: 400px;
-  height: 350px;
-  background-color: black;
-  border-color: white;
-  border-style: solid;
-  font-size: 25px;
-}
+
 .popoverlay{
+  display: none;
   position: fixed;
   top: 25%;
   left: 25%;
