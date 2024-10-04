@@ -104,6 +104,10 @@ hr{
   border-style: solid;
   font-family: "Abril Fatface", serif;
   color:white;
+  font-size: 20px;
+  font-weight: bold;
+  height: 30px;
+  width: 30px;
 }
 .input{
   position: absolute;
