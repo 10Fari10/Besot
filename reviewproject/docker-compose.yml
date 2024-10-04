@@ -1,0 +1,18 @@
+version: "3.3"
+services:
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: mysqlcse312
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpass
+    ports:
+      - "3306:3306"
+  app:
+    build: .
+    environment:
+      WAIT_HOSTS: mysql:3306  
+    ports:
+      - "8080:8080"
+   
