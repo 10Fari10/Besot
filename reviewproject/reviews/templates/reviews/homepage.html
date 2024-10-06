@@ -26,7 +26,8 @@
 
 <!--sign in form-->
 <div class="logbox" id="signing">
-    <form>
+    <form action ="/test/" method="post"> {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.path }}">
     <!--Close button-->
         <button onclick="signDown" class="x" type="button" id="closeSign">&times;</button><br><br>
     <!--User Name field-->

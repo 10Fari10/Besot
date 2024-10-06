@@ -1,18 +1,17 @@
-version: "3.3"
 services:
-  mysql:
-    image: mysql:latest
+  postgres:
+    image: postgres
     environment:
-      MYSQL_DATABASE: mysqlcse312
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: rootpass
+      POSTGRES_DB: sqlcse312
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
     ports:
-      - "3306:3306"
-  app:
+      - "5432:5432"
+  web:
     build: .
     environment:
-      WAIT_HOSTS: mysql:3306  
+      WAIT_HOSTS: postgres:5432 
     ports:
       - "8080:8080"
-   
+    depends_on:
+      - postgres
