@@ -1,6 +1,0 @@
-SECRET_KEY='django-insecure-f*xlhrpkh%xl2cxnsanbw&0qy_q+j*2z1!-dg6rx(s&n75h(w6'
-DB_NAME='sqlcse312'
-DB_USER='user' 
-DB_PASSWORD='password'
-DB_HOST='postgres'
-DB_PORT='5432'

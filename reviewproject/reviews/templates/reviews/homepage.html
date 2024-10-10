@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="{% static 'reviews/style.css' %}">
+    <link rel="stylesheet" href="{% static 'reviews/leaflet.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
 <!--map api set up-->
@@ -46,18 +47,26 @@
 </div><br><hr>
 
 <!--logo of website-->
-<div id="logobox"></div><br><hr>
+<div id="logobox">
+    <img src="{% static 'reviews/images/Logo1.jpg' %}" alt="Logo">
+    </div><br><hr>
 
 <!--introduction--> 
 <div class="box">Welcome! This is a website for anyone in the 716 area to share cool hangout spots. From a cool part of a park to a street with a nice view. To make a review hit the button at the bottom right: upload a clear picture, then put the adress, your rating, and quick review of your spot!</div>
 <!--post container,map should be here-->
 <br><br><div class="bodcontainer"><hr>
-    <div id="map" style="width:95%;height:100%;"></div>
+    <div id="map" style="height: 500px; width: 100%;"></div>
     <script src="{% static 'reviews/map.js' %}"></script>
 </div>
 
 <!--post button-->
-<button class="circle" onclick="popUp()" id="postButton"></button><hr>
+        
+<button class="circle" id="postButton">
+    <img src="{% static 'reviews/images/plus.jpg' %}" alt="PLUS">
+    
+</button><hr>
+
+
 <!--post pop up form-->
     <div class="popoverlay" id="addPost">
         <form>
@@ -78,5 +87,6 @@
         </form>
     </div>
         <script src="{% static 'reviews/scripts.js' %}"></script>
+        <script src="{% static 'reviews/leaflet.js' %}"></script>
     </body>
 </html>
