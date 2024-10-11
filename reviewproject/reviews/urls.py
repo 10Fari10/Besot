@@ -4,6 +4,7 @@ from reviews.views import *
 
 urlpatterns = [
     path('', main_homepage, name='main_homepage'),
-    path('test/',db_test,name = 'test/'),
-    path('show/',show,name = 'show/')
+    path("send_post/",sendPost,name='send_post/'),
+    path("map_post/",postHandle,name='map_post/'),
+    path("like/",likeHandle,name='like/'),
     ] 
