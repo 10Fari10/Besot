@@ -1,8 +1,4 @@
-  //popUP function-once clicking the post button the post form will popup
-  document.getElementById("postButton").addEventListener("click", popUp);
-  function popUp(){
-  document.getElementById("addPost").style.display="block";   
-  }
+
   //popDown fuction-click the 'x' for the post form to dissappear
   document.getElementById("closePop").addEventListener("click", popDown);
   function popDown(){
@@ -17,10 +13,6 @@
       const l_a = document.getElementById("l_aVal").value;
       const rev = document.getElementById("revVal").value;
   
-      if(!pic){
-          alert("Please upload a png/jpg/jpeg.");
-          return;
-      }
       if(!l_a){
           alert("Please enter a location/address.");
           return;
