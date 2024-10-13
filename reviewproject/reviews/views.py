@@ -63,22 +63,22 @@ def sendPost(request):
   allPosts = []
   for p in post:
      parent_content = {}
-     parent_content.username = p.username
-     parent_content.body = p.body
-     parent_content.likes = p.likes
-     parent_content.parent = p.parent
-     parent_content.reply_num = p.replies
+     parent_content["username"] = p.username
+     parent_content["body"] = p.body
+     parent_content["likes"] = p.likes
+     parent_content["parent"] = p.parent
+     parent_content["reply_num"] = p.replies
      replies = []
      reply = Posts.objects.filter(parent=p.postID).order_by("id").values()
      for r in reply:
        reply_content = {}
-       reply_content.username = r.username
-       reply_content.body = r.body
-       reply_content.likes = r.likes
-       reply_content.parent = r.parent
-       reply_content.replies = r.replies
+       reply_content["username"] = r.username
+       reply_content["body"] = r.body
+       reply_content["likes"]= r.likes
+       reply_content["parent"]= r.parent
+       reply_content["reply_num"]= r.replies
        replies.append(reply_content)
-     parent_content.replies =  replies
+     parent_content["replies"] =  replies
      allPosts.append(parent_content)
   context = {
     'allposts':allPosts
