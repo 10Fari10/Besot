@@ -1,5 +1,7 @@
 body{
   background-color: black;
+  margin: 0;
+  
 }
 .bodcontainer{
   width:98%;
@@ -52,7 +54,7 @@ hr{
   right: 10px;
 }
 
-.popoverlay{
+.popoverlay {
   display: none;
   position: fixed;
   top: 25%;
@@ -62,8 +64,11 @@ hr{
   border-style: solid;
   width:800px;
   height:500px;
-  z-index: 1;
+  z-index: 1001;
 }
+
+
+
 .logbox{
   position: fixed;
   top: 25%;

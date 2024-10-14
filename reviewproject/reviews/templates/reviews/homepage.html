@@ -54,30 +54,33 @@
 <!--introduction--> 
 <div class="box">Welcome! This is a website for anyone in the 716 area to share cool hangout spots. From a cool part of a park to a street with a nice view. To make a review hit the button at the bottom right: upload a clear picture, then put the adress, your rating, and quick review of your spot!</div>
 <!--post container,map should be here-->
-<br><br><div class="bodcontainer"><hr>
-    <div id="map" style="height: 500px; width: 100%;"></div>
+
+
+<div class="bodcontainer"><hr>
+    <div id="map" class="map" style="height: 500px; width: 100%;"></div>
     <script src="{% static 'reviews/map.js' %}"></script>
 </div>
 
 
 
-
 <!--post pop up form-->
-    <div class="popoverlay" id="addPost">
-        <form>
-        <!--Close Button-->
-            <button onclick="popDown()" type="button" class="x" id="closePop">&times;</button><br><hr><br>
-        <!--Media Upload Field-->    
-            <input type="file" id="picVal" class="pbutton"><br><hr><br><hr>
-        <!--Review Field-->           
-            <input type="text" placeholder="Leave You Review Here" id="revVal" class="pinput"><br><hr><br><hr>
-        <!--Submit Button-->
-            <input type="Submit" onclick="submission()" class="pbutton" placeholder="Submit"><br><hr><br><hr>
-        <!--Reset Button-->    
-            <input type="Reset" class="pbutton" placeholder="Reset">
-        </form>
-    </div>
-        <script src="{% static 'reviews/scripts.js' %}"></script>
-        <script src="{% static 'reviews/leaflet.js' %}"></script>
-    </body>
+<div class="popoverlay" id="addPost">
+    <form>
+    <!--Close Button-->
+        <button onclick="popDown()" type="button" class="x" id="closePop">&times;</button><br><hr><br>
+    <!--Media Upload Field-->    
+        <input type="file" id="picVal" class="pbutton"><br><hr><br><hr>
+    <!--Review Field-->           
+        <input type="text" placeholder="Leave You Review Here" id="revVal" class="pinput"><br><hr><br><hr>
+    <!--Submit Button-->
+        <input type="Submit" onclick="submission()" class="pbutton" placeholder="Submit"><br><hr><br><hr>
+    <!--Reset Button-->    
+        <input type="Reset" class="pbutton" placeholder="Reset">
+    </form>
+</div>
+
+<!-- JavaScript Files -->
+<script src="{% static 'reviews/scripts.js' %}"></script>
+<script src="{% static 'reviews/leaflet.js' %}"></script>
+</body>
 </html>
