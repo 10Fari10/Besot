@@ -13,14 +13,16 @@ def main_homepage(request):
     return render(request, 'reviews/homepage.html') 
 
 @csrf_protect
+#Receives post requests from users posting and replying
 def postHandle(request):
-  #handle authtoken
-  #use autoincrement id for post username
-  #increment reply and like number
-  #remember to migrate and add urls
-  #handle no auth
-  #check hash method
-  #escape special characters
+  req_body = request.body.decode()
+  req_body = json.loads(req_body)
+  lat = req_body["lat"]
+  long= req_body["long"]
+  parent = req_body["parent"]
+  likes = req_body["likes"]
+  replies = req_body["replies"]
+
   auth = request.COOKIES.get('auth_token')
   if not(auth is None):
     sha = hashlib.sha256()
@@ -28,10 +30,9 @@ def postHandle(request):
     auth = sha.hexdigest()
     if(Users.objects.filter(auth_token=auth).count() ==1):
       user = Users.objects.get(auth_token=auth)
-      post = Posts(username=user.username,lat= 0,long=0,parent=request.parent,likes=0,replies=0)
+      post = Posts(username=user.username,lat= lat,long=long,parent=parent,likes=likes,replies=replies)
       post.save()
-    if(request.parent != -1):
-      parent = request.parent
+    if(parent != -1):
       post = Posts.objects.get(id=parent)
       post.replies = post.replies+1
       post.save()
@@ -41,12 +42,11 @@ def postHandle(request):
   return HttpResponseRedirect(next)
 
 @csrf_protect
+#Receives post requests from users liking
 def likeHandle(request):
-  #handle authtoken
-  #use autoincrement id for post username
-  #increment reply and like number
-  #ask about like functionality
-  parent = request.parent
+  req_body = request.body.decode()
+  req_body = json.loads(req_body)
+  parent = req_body["parent"]
   post = Posts.objects.get(id=parent)
   if(Posts.objects.filter(id=parent).count() ==1):
     post.likes = post.likes+1
@@ -55,10 +55,13 @@ def likeHandle(request):
   return HttpResponseRedirect(next)
 
 @csrf_protect
+#Receives get requests and sends posts from specified location to front end
 def sendPost(request):
   template= loader.get_template("homepage.html")
-  lat = request.lat
-  long = request.long
+  req_body = request.body.decode()
+  req_body = json.loads(req_body)
+  lat = req_body["lat"]
+  long= req_body["long"]
   post = Posts.objects.filter(lat=lat,long=long).order_by("id").values()
   allPosts = []
   for p in post:
@@ -84,3 +87,4 @@ def sendPost(request):
     'allposts':allPosts
   }
   return HttpResponse(template.render(context,request))
+
