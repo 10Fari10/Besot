@@ -17,8 +17,10 @@
     const lat = document.getElementById("latVal").value;
     const long = document.getElementById("longVal").value;
     const review_text = document.getElementById("revVal").value;
-    
-
+    if(review_text==''){
+        alert("Please enter review.")
+    }
+    else{
     const data_to_send = {
         latVal: lat,           
         longVal: long,               //username and parent probably should be added here. not sure if replies should be a list
@@ -41,7 +43,7 @@
             const sent_data = await response.json();
             console.log("OK!:", sent_data);
 
-            document.getElementById("picVal").value = '';
+            //document.getElementById("picVal").value = '';
             document.getElementById("latVal").value = '';
             document.getElementById("longVal").value = '';
             document.getElementById("revVal").value = '';
@@ -51,6 +53,7 @@
     } catch (error) {
         console.error("ERROR:", error);
     }
+}
 }
   //logme function- when Log-in button is click the log in form will appear
   document.getElementById("lButton").addEventListener("click",logme);
