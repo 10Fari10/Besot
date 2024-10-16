@@ -24,9 +24,12 @@
     const data_to_send = {
         latVal: lat,           
         longVal: long,               //username and parent probably should be added here. not sure if replies should be a list
-        review: review_text,
-        likes: 0,  
-        replies: []  
+        review: review_text,        //replies is number of replies
+        
+        likes: 0,                   //Placeholder values
+        replies: 0,
+        parent:"",
+        username:"",
     };
 
     try {
@@ -34,7 +37,7 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRFToken': csrfToken  
+                'X-CSRFToken': CSRF_TOKEN
             },
             body: JSON.stringify(data_to_send)
         });

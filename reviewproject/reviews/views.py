@@ -15,11 +15,14 @@ def main_homepage(request):
 @csrf_protect
 #Receives post requests from users posting and replying
 def postHandle(request):
+  print("aww")
   req_body = request.body.decode()
   req_body = json.loads(req_body)
-  lat = req_body["lat"]
-  long= req_body["long"]
-  parent = req_body["parent"]
+  lat = req_body["latVal"]
+  long= req_body["longVal"]
+  body = req_body["review"]
+  #parent = req_body["parent"]
+  parent = 0 # placeholder
   likes = req_body["likes"]
   replies = req_body["replies"]
 
