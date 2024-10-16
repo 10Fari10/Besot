@@ -6,28 +6,52 @@
   }
   //submission function-once form is completed with all fields entered with a value (not empty else different alert will appear)
   //once check field are filled will empty values and automatically close
-  function submission(event){
-      event.preventDefault();  
+
   
-      const pic = document.getElementById("picVal").value;
-      const l_a = document.getElementById("l_aVal").value;
-      const rev = document.getElementById("revVal").value;
-  
-      if(!l_a){
-          alert("Please enter a location/address.");
-          return;
-      }
-      if(!rev){
-          alert("Please enter a review.");
-          return;
-      }
-  
-      // If all fields are filled, clear the values and close the form
-      document.getElementById("picVal").value = '';
-      document.getElementById("l_aVal").value = '';
-      document.getElementById("revVal").value = '';
-      popDown();  
-  }
+  document.getElementById('reviewForm').addEventListener('submit', submission);
+
+  async function submission(event) {
+    event.preventDefault(); 
+
+    
+    const lat = document.getElementById("latVal").value;
+    const long = document.getElementById("longVal").value;
+    const review_text = document.getElementById("revVal").value;
+    
+
+    const data_to_send = {
+        latVal: lat,           
+        longVal: long,               //username and parent probably should be added here. not sure if replies should be a list
+        review: review_text,
+        likes: 0,  
+        replies: []  
+    };
+
+    try {
+        const response = await fetch('/map_post/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrfToken  
+            },
+            body: JSON.stringify(data_to_send)
+        });
+
+        if (response.ok) {
+            const sent_data = await response.json();
+            console.log("OK!:", sent_data);
+
+            document.getElementById("picVal").value = '';
+            document.getElementById("latVal").value = '';
+            document.getElementById("longVal").value = '';
+            document.getElementById("revVal").value = '';
+            popDown();  
+        } 
+    
+    } catch (error) {
+        console.error("ERROR:", error);
+    }
+}
   //logme function- when Log-in button is click the log in form will appear
   document.getElementById("lButton").addEventListener("click",logme);
   function logme(){

@@ -63,24 +63,29 @@
 
 
 
-<!--post pop up form-->
 <div class="popoverlay" id="addPost">
-    <form> 
-    <!--Close Button-->
+    <form id="reviewForm">
+        <!-- CSRF Token -->
+        {% csrf_token %}
+        <!-- Close Button -->    
         <button onclick="popDown()" type="button" class="x" id="closePop">&times;</button><br><hr><br>
-    <!--Media Upload Field-->    
+        <!-- Media Upload Field -->    
         <input type="file" id="picVal" class="pbutton"><br><hr><br><hr>
-    <!--Review Field-->           
-        <input type="text" placeholder="Leave You Review Here" id="revVal" class="pinput"><br><hr><br><hr>
-    <!--Submit Button-->
-        <input type="Submit" onclick="submission()" class="pbutton" placeholder="Submit"><br><hr><br><hr>
-    <!--Reset Button-->    
-        <input type="Reset" class="pbutton" placeholder="Reset">
+        <!-- Review Field -->           
+        <input type="text" placeholder="Leave Your Review Here" id="revVal" class="pinput"><br><hr><br><hr>
+        <!-- Hidden Latitude and Longitude Fields -->
+        <input type="hidden" id="latVal" name="lat" value="">
+        <input type="hidden" id="longVal" name="long" value="">
+        <!-- Submit Button -->
+        <input type="submit" class="pbutton" value="Submit"><br><hr><br><hr>
+        <!-- Reset Button -->    
+        <input type="reset" class="pbutton" value="Reset">
     </form>
 </div>
 
 <!-- JavaScript Files -->
 <script src="{% static 'reviews/scripts.js' %}"></script>
 <script src="{% static 'reviews/leaflet.js' %}"></script>
+<script src ="{% static 'reviews/map.js' %}"></script>
 </body>
 </html>
