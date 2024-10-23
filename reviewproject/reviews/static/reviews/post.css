@@ -1,0 +1,51 @@
+.box{
+    width: 250px;
+  height:300px;
+  border:solid;
+}
+.revcont{
+    width:200px;
+  height:100px;
+  border:solid;
+  margin-left:10%;
+  font-family: "Abril Fatface", serif;
+  font-size: 10px;
+}
+.like{
+    background-image: url("{% static 'reviews/images/.like.png' %}");
+    background-size: cover;
+    width:30px;
+  height:30px;
+  border:none;
+  background-color:white;
+}
+.dislike{
+    background-image: url("{% static 'reviews/images/.dislike.png' %}");
+    background-size: cover;
+    background-size: cover;
+    width:30px;
+  height:30px;
+  border:none;
+  background-color:white;
+}
+hr{
+border:none;
+}
+.replybox{
+ width:200px;
+  height:100px;
+  border:solid;
+  margin-left:10%;
+  font-family: "Lancelot", serif;
+  font-size: 15px;
+  text-align: left;
+}
+.reply{
+ width:200px;
+  height:50px;
+  border:solid;
+  margin-left:10%;
+  font-family: "Lancelot", serif;
+  font-size: 15px;
+  text-align: left;
+}
