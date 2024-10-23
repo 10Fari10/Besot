@@ -37,5 +37,7 @@ from django.urls import path, include
 from reviews.views import main_homepage
 
 urlpatterns = [
-    path('', include('reviews.urls')), 
+    path('', include('reviews.urls')),
+    path('users/', include('django.contrib.auth.urls')),
+    path('users/', include('users.urls')),
 ]
