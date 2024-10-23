@@ -12,9 +12,13 @@
 </head>
     <body>
    <!--log-in and sign in buttons-->
-<button onclick="logme()" class="logbutton" id="lButton">Login</button>
-<button onclick="signme()" class="signbutton" id="sButton">Sign-In</button>
-
+   {% if user.is_authenticated %}
+    <a class="logbutton" href="{% url 'logout' %}">Logout</a>
+   {% else %}
+   <a class="logbutton" href="{% url 'login_user' %}">Login</a>
+   <p>tst</p>
+   <a class="logbutton" href="{% url 'register_user' %}">Register</a>
+   {% endif %}
  <!--log in form-->       
 <div class="logbox" id="logging">
     <form><hr><hr><hr>
