@@ -6,6 +6,7 @@ class Users(models.Model):
     auth_token = models.CharField(max_length=255,null=True)
 
 class Posts(models.Model):
+    id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=255)
     body = models.CharField(max_length=255,default='')
     lat = models.IntegerField(null=True)

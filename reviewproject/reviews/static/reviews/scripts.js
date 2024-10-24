@@ -28,7 +28,8 @@
         
         likes: 0,                   //Placeholder values
         replies: 0,
-        parent:-1
+        parent:"",
+        username:"",
     };
 
     try {
@@ -51,6 +52,7 @@
             document.getElementById("revVal").value = '';
             popDown();  
         } 
+        pasteReviews(lat, long);
     
     } catch (error) {
         console.error("ERROR:", error);
@@ -116,5 +118,86 @@
       n_p_1.value='';
       n_p_2.value='';
       signDown();
+  }
+  
+
+  function pasteReviews(lat,long){
+
+    fetch(`/send_post/?lat=${lat}&long=${long}`, {
+        method: "GET",
+        headers: {
+
+            'Content-Type': 'application/json',
+            'X-CSRFToken': CSRF_TOKEN
+        },
+    })
+  
+    .then(response => {
+        if(!response.ok){
+            throw new error("ERROR!")
+        }
+        else{
+            return response.json();
+        }
+    })
+    .then(data => {
+        displayReviews(data.allposts); 
+    })
+}
+  
+
+  function displayReviews(allPosts){
+    const dynamiccontainer = document.getElementById("reviewcontainer");
+    dynamiccontainer.innerHTML = "";
+
+    for (let i = 0; i < allPosts.length; i++){
+        const post = allPosts[i];
+        const postElement = document.createElement("div");
+        postElement.classList.add("pinform");                           //i am using textcontent instead of innerhtml due to security risks 
+        const Elem_user = document.createElement("p")
+        Elem_user.textContent = post.username;
+        postElement.appendChild(Elem_user);
+        const Elem_body = document.createElement("p")              
+        Elem_body.textContent = post.body;
+        postElement.appendChild(Elem_body);
+        const Elem_likes = document.createElement("span");
+        Elem_likes.textContent = `Likes: ${post.likes}`;
+        postElement.appendChild(Elem_likes)
+        const likeButton = document.createElement("button");
+        likeButton.textContent = "Like";
+        likeButton.classList.add("likeBtn");
+        likeButton.onclick = () => {
+            likesincrement(post.id, likesElement);
+        };
+        postElement.appendChild(likeButton);
+    }
+    
+
+  }
+
+
+  function likesincrement(){
+
+    fetch('/like/', {
+        method : "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': CSRF_TOKEN 
+        },
+        body: JSON.stringify({ parent: post.parent })
+    })
+
+    .then(response => {
+        if(!response.ok){
+            throw new error("ERROR!")
+        }
+        else{
+            return response.json();
+        }
+    })
+
+    .then(data => {
+        likesElement.textContent = `Likes: ${data.likes}`; 
+    }) 
   }
   
