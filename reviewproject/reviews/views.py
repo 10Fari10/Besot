@@ -1,13 +1,22 @@
 from django.shortcuts import render
 import json
-import bcrypt
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import loader
 from reviews.models import Users
 from reviews.models import Posts
-import hashlib
+from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_protect
+import html
+
+import logging
+from django.conf import settings
+
+fmt = getattr(settings, 'LOG_FORMAT', None)
+lvl = getattr(settings, 'LOG_LEVEL', logging.DEBUG)
+
+logging.basicConfig(format=fmt, level=lvl)
+logging.debug("Logging started on %s for %s" % (logging.root.name, logging.getLevelName(lvl)))
 
 def main_homepage(request):
     return render(request, 'reviews/homepage.html') 
@@ -15,34 +24,27 @@ def main_homepage(request):
 @csrf_protect
 #Receives post requests from users posting and replying
 def postHandle(request):
-  print("aww")
   req_body = request.body.decode()
   req_body = json.loads(req_body)
-  lat = req_body["latVal"]
-  long= req_body["longVal"]
-  body = req_body["review"]
-  #parent = req_body["parent"]
-  parent = 0 # placeholder
+  lat = int(float(req_body["latVal"]))
+  long= int(float(req_body["longVal"]))
+  body = html.escape(req_body["review"])
+  parent = req_body["parent"]
   likes = req_body["likes"]
   replies = req_body["replies"]
-
-  auth = request.COOKIES.get('auth_token')
-  if not(auth is None):
-    sha = hashlib.sha256()
-    sha.update(auth.encode())
-    auth = sha.hexdigest()
-    if(Users.objects.filter(auth_token=auth).count() ==1):
-      user = Users.objects.get(auth_token=auth)
-      post = Posts(username=user.username,lat= lat,long=long,parent=parent,likes=likes,replies=replies)
+  
+  if request.user.is_authenticated:
+      username = request.user.get_username()
+      post = Posts(username=username,lat= lat,long=long,parent=parent,likes=likes,replies=replies,body=body)
       post.save()
-    if(parent != -1):
-      post = Posts.objects.get(id=parent)
-      post.replies = post.replies+1
-      post.save()
+      if(parent != -1):
+        post = Posts.objects.get(id=parent)
+        post.replies = post.replies+1
+        post.save()
   else:
     return HttpResponse('Unauthorized', status=401)
   next = request.POST.get('next','/')
-  return HttpResponseRedirect(next)
+  return render(request, 'reviews/homepage.html') 
 
 @csrf_protect
 #Receives post requests from users liking
@@ -69,7 +71,6 @@ def sendPost(request):
   allPosts = []
   for p in post:
      parent_content = {}
-     parent_content["id"] = p['id']
      parent_content["username"] = p.username
      parent_content["body"] = p.body
      parent_content["likes"] = p.likes
@@ -79,7 +80,6 @@ def sendPost(request):
      reply = Posts.objects.filter(parent=p.postID).order_by("id").values()
      for r in reply:
        reply_content = {}
-       parent_content["id"] = r['id']
        reply_content["username"] = r.username
        reply_content["body"] = r.body
        reply_content["likes"]= r.likes
@@ -92,4 +92,3 @@ def sendPost(request):
     'allposts':allPosts
   }
   return HttpResponse(template.render(context,request))
-
