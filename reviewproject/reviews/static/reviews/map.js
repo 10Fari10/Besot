@@ -11,7 +11,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 function x_marks_the_spot(x) {
     const lat = x.latlng.lat; 
     const long = x.latlng.lng; 
-    var marker = L.marker([lat,long]).addTo(map).bindPopup("posts will go here");
+    var marker = L.marker([lat,long]).addTo(map).bindPopup("<button>Add Post</button>");
     document.getElementById('latVal').value = lat; 
     document.getElementById('longVal').value = long; 
     document.getElementById("addPost").style.display="block";    
