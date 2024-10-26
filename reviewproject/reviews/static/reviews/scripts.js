@@ -17,7 +17,6 @@
     const lat = document.getElementById("latVal").value;
     const long = document.getElementById("longVal").value;
     const review_text = document.getElementById("revVal").value;
-    
     if(review_text==''){
         alert("Please enter review.")
     }
@@ -30,7 +29,7 @@
         likes: 0,                   //Placeholder values
         replies: 0,
         parent:-1,
-        
+        username:"",
     };
 
     try {
@@ -44,19 +43,26 @@
         });
 
         if (response.ok) {
-            const sent_data = await response.json();
+            sent_data = await response.json();
+            renderPins(pins);
             console.log("OK!:", sent_data);
 
             //document.getElementById("picVal").value = '';
             document.getElementById("latVal").value = '';
             document.getElementById("longVal").value = '';
             document.getElementById("revVal").value = '';
+            pasteReviews(lat, long);
             popDown();  
-        } 
-        pasteReviews(lat, long);
+        }
+        else{
+            alert("Failed to create post.");
+            popDown();
+        }
+    
     
     } catch (error) {
         console.error("ERROR:", error);
+        alert("An error occurred while submitting your review.");
     }
 }
 }
@@ -175,6 +181,7 @@
             likesincrement(post.id, likesElement);
         };
         postElement.appendChild(likeButton);
+        dynamiccontainer.appendChild(postElement);
     }
     
 

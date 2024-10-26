@@ -5,16 +5,17 @@ class Users(models.Model):
     password = models.CharField(max_length=255)
     auth_token = models.CharField(max_length=255,null=True)
 
+class Pins(models.Model):
+    lat = models.FloatField(null=True)
+    long = models.FloatField(null=True)
+
+
 class Posts(models.Model):
-    id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=255)
     body = models.CharField(max_length=255,default='')
-    lat = models.IntegerField(null=True)
-    long = models.IntegerField(null=True)
+    lat = models.FloatField(null=True)
+    long = models.FloatField(null=True)
     likes = models.IntegerField()
     parent = models.CharField(max_length=255,null=True)
     replies = models.IntegerField(null=True)
-
-class Pins(models.Model):
-    lat = models.IntegerField(null=True)
-    long = models.IntegerField(null=True)
+    

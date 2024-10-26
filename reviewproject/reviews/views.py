@@ -26,29 +26,36 @@ def main_homepage(request):
 @csrf_protect
 #Receives post requests from users posting and replying
 def postHandle(request):
-  req_body = request.body.decode()
-  req_body = json.loads(req_body)
-  lat = int(float(req_body["latVal"]))
-  long= int(float(req_body["longVal"]))
-  body = html.escape(req_body["review"])
-  parent = req_body["parent"]
-  likes = req_body["likes"]
-  replies = req_body["replies"]
-  
-  if request.user.is_authenticated:
-      pin = Pins(lat,long)
-      pin.save()
-      username = request.user.get_username()
-      post = Posts(username=username,lat= lat,long=long,parent=parent,likes=likes,replies=replies,body=body)
-      post.save()
-      if(parent != -1):
-        post = Posts.objects.get(id=parent)
-        post.replies = post.replies+1
+  if not request.user.is_authenticated:
+        return JsonResponse({'error': 'Unauthorized'}, status=401)
+
+  if request.method == "POST":
+
+        req_body = request.body.decode()
+        req_body = json.loads(req_body)
+        lat = float(req_body.get("latVal", 0))  
+        long = float(req_body.get("longVal", 0))
+        body = html.escape(req_body.get("review", ""))
+        parent = req_body.get("parent", -1)
+        likes = req_body.get("likes", 0)
+        replies = req_body.get("replies", 0)
+
+        pin = Pins(lat = lat, long = long)
+        pin.save()
+        username = request.user.get_username()
+        post = Posts(username=username, lat=lat, long=long, parent=parent,likes=likes, replies=replies, body=body)
         post.save()
-  else:
-    return HttpResponse('Unauthorized', status=401)
-  next = request.POST.get('next','/')
-  return render(request, 'reviews/homepage.html') 
+
+        if parent != -1:
+          parent_post = Posts.objects.get(id=parent)
+          parent_post.replies += 1
+          parent_post.save()
+             
+
+        SendPins = list(Pins.objects.values("lat", "long"))
+        return JsonResponse({"message": "Post created successfully!", "pins": SendPins}, status=201)
+
+  return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 @csrf_protect
 #Receives post requests from users liking
