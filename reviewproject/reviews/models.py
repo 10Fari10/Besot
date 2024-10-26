@@ -14,3 +14,7 @@ class Posts(models.Model):
     likes = models.IntegerField()
     parent = models.CharField(max_length=255,null=True)
     replies = models.IntegerField(null=True)
+
+class Pins(models.Model):
+    lat = models.IntegerField(null=True)
+    long = models.IntegerField(null=True)

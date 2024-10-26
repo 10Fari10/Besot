@@ -28,7 +28,7 @@
         
         likes: 0,                   //Placeholder values
         replies: 0,
-        parent:"",
+        parent:-1,
         username:"",
     };
 
