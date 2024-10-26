@@ -14,15 +14,15 @@ def login_user(request):
         if form.is_valid():
             login(request, form.get_user())
             return redirect('main_homepage')
-                # Redirect to a success page.9
         else:
             messages.success(request, "Error Logging In")
-            return redirect('authentication/login_user.html')# Return an 'invalid login' error message
+            return render(request, 'authentication/login_user.html', {"form":form})# Return an 'invalid login' error message
 
     else:
         form = AuthenticationForm()
     return render(request, 'authentication/login_user.html', {"form":form})
-    # return render(request, 'authentication/login_user.html', {"form":form})
+
+
 def logout_user(request):
     logout(request)
     messages.success(request, "You were logged out")
@@ -45,4 +45,7 @@ def register_user(request):
     return render(request, 'authentication/register_user.html', {
         'form':form,
     })
+
+
+
 
