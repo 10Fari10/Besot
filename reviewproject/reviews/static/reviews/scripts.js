@@ -17,6 +17,7 @@
     const lat = document.getElementById("latVal").value;
     const long = document.getElementById("longVal").value;
     const review_text = document.getElementById("revVal").value;
+    
     if(review_text==''){
         alert("Please enter review.")
     }
@@ -29,7 +30,7 @@
         likes: 0,                   //Placeholder values
         replies: 0,
         parent:-1,
-        username:"",
+        
     };
 
     try {
@@ -151,6 +152,10 @@
     dynamiccontainer.innerHTML = "";
 
     for (let i = 0; i < allPosts.length; i++){
+        const id = document.createElement("input");
+        id.setAttribute("type", "hidden");
+        id.setAttribute("name", "id");
+        id.setAttribute("value", post.id);
         const post = allPosts[i];
         const postElement = document.createElement("div");
         postElement.classList.add("pinform");                           //i am using textcontent instead of innerhtml due to security risks 

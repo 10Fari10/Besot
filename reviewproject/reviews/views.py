@@ -55,9 +55,9 @@ def postHandle(request):
 def likeHandle(request):
   req_body = request.body.decode()
   req_body = json.loads(req_body)
-  parent = req_body["parent"]
-  post = Posts.objects.get(id=parent)
-  if(Posts.objects.filter(id=parent).count() ==1):
+  id = req_body["id"]
+  post = Posts.objects.get(id=id)
+  if(Posts.objects.filter(id=id).count() ==1):
     post.likes = post.likes+1
     post.save()
   next = request.POST.get('next','/')
@@ -79,6 +79,7 @@ def sendPost(request):
       parent_content["likes"] = p["likes"]
       parent_content["parent"] = p["parent"]
       parent_content["reply_num"] = p["replies"]
+      parent_content['id'] = p["id"]
       replies = []
       reply = Posts.objects.filter(parent=p["id"]).order_by("id").values()
       for r in reply:
@@ -88,6 +89,7 @@ def sendPost(request):
         reply_content["likes"]= r["likes"]
         reply_content["parent"]= r["parent"]
         reply_content["reply_num"]= r["replies"]
+        reply_content['id'] = r["id"]
         replies.append(reply_content)
       parent_content["replies"] =  replies
       allPosts.append(parent_content)
