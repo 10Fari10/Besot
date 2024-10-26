@@ -1,7 +1,5 @@
 body{
   background-color: black;
-  margin: 0;
-  
 }
 .bodcontainer{
   width:98%;
@@ -19,9 +17,11 @@ body{
   height: 100px;
   background-image: url("{% static 'reviews/images/Logo1.png' %}");
   background-size: cover;
-  border-color: white;
-  border-style: solid;
+  /*border-color: white;*/
+  /*border-style: solid;*/
   border-radius: 2.5px;
+  display: flex;
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
   
@@ -54,7 +54,7 @@ hr{
   right: 10px;
 }
 
-.popoverlay {
+.popoverlay{
   display: none;
   position: fixed;
   top: 25%;
@@ -64,11 +64,7 @@ hr{
   border-style: solid;
   width:800px;
   height:500px;
-  z-index: 1001;
 }
-
-
-
 .logbox{
   position: fixed;
   top: 25%;
@@ -164,4 +160,29 @@ accent-color: white;
 width:350px;
 position: absolute;
 left:25%;
+}
+.welcome_username {
+  position: absolute;
+  background-color:#00338d;
+  color:white;
+  font-family: "Abril Fatface", serif;
+  border-style:solid;
+  border-color:#00338d;
+  right:%;
+  top: -1%;
+}
+.welcome_user_container{
+  display: inline;
+}
+.welcome_user{
+    position: absolute;
+  /*background-color:#2CABF6;*/
+  background-color:darkviolet;
+  color:white;
+  font-family: "Abril Fatface", serif;
+  border-style:solid;
+  /*border-color:#1B03A3;*/
+  border-color: darkviolet;
+  top:-1%;
+  right:90%;
 }
