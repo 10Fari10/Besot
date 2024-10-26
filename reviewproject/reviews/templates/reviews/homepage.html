@@ -1,9 +1,8 @@
-% load static %}
+{% load static %}
 <!DOCTYPE html>
 <html>
     <link rel="stylesheet" href="{% static 'reviews/style.css' %}">
     <link rel="stylesheet" href="{% static 'reviews/leaflet.css' %}">
-    <link rel="stylesheet" href="{% static 'reviews/post.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
 <!--map api set up-->
@@ -15,6 +14,10 @@
    <!--log-in and sign in buttons-->
    {% if user.is_authenticated %}
     <a class="logbutton" href="{% url 'logout' %}">Logout</a>
+   <div class="welcome_user_container">
+   <h2 class="welcome_username">Welcome </h2>
+       <h2 class="welcome_user"> {{ user.username }} </h2>
+   </div>
    {% else %}
    <a class="logbutton" href="{% url 'login_user' %}">Login</a>
    <p>tst</p>
@@ -59,40 +62,40 @@
 <!--introduction--> 
 <div class="box">Welcome! This is a website for anyone in the 716 area to share cool hangout spots. From a cool part of a park to a street with a nice view. To make a review hit the button at the bottom right: upload a clear picture, then put the adress, your rating, and quick review of your spot!</div>
 <!--post container,map should be here-->
-
-
-<div class="bodcontainer"><hr>
-    <div id="map" class="map" style="height: 500px; width: 100%;"></div>
+<br><br><div class="bodcontainer"><hr>
+    <div id="map" style="height: 500px; width: 100%;"></div>
     <script src="{% static 'reviews/map.js' %}"></script>
 </div>
 
-<div id="reviewcontainer"></div>
+<!--post button-->
+
+    <img src="{% static 'reviews/images/plus.jpg' %}" alt="PLUS">
+    
+</button><hr>
 
 
-<div class="popoverlay" id="addPost">
-    <form id="reviewForm">
-        <!-- CSRF Token -->
-        
-        <!-- Close Button -->    
-        <button onclick="popDown()" type="button" class="x" id="closePop">&times;</button><br><hr><br>
-        <!-- Media Upload Field for now omit for potentially project prt2 -->    
-       <!--<input type="file" id="picVal" class="pbutton"><br><hr><br><hr>-->
-        <!-- Review Field -->           
-        <input type="text" placeholder="Leave Your Review Here" id="revVal" class="pinput"><br><hr><br><hr>
-        <!-- Hidden Latitude and Longitude Fields -->
-        <input type="hidden" id="latVal" name="lat" value="">
-        <input type="hidden" id="longVal" name="long" value="">
-        <!-- Submit Button -->
-        <input type="submit" class="pbutton" value="Submit" onclick="submission(event)"><br><hr><br><hr>
-        <!-- Reset Button -->    
-        <input type="reset" class="pbutton" value="Reset">
-    </form>
-</div>
-
-<!-- JavaScript Files -->
-<script src="{% static 'reviews/scripts.js' %}"></script>
-
-<script src ="{% static 'reviews/map.js' %}"></script>
-<script> var CSRF_TOKEN = '{{ csrf_token }}';</script>
+<!--post pop up form-->
+    <div class="popoverlay" id="addPost">
+        <form>
+        <!--Close Button-->
+            <button onclick="popDown()" type="button" class="x" id="closePop">&times;</button><br><hr><br>
+        <!--Media Upload Field-->    
+            <input type="file" id="picVal" class="pbutton"><br><hr><br><hr>
+        <!--Location/Address field-->            
+            <input type="text" placeholder="Location/Adress" id="l_aVal" class="pinput"><br><hr><br><hr>
+        <!--Range Field-->            
+            <input type="range" min="0" max="5" id="ratingVal" class="hue"><hr><br><hr>
+        <!--Review Field-->           
+            <input type="text" placeholder="Leave You Review Here" id="revVal" class="pinput"><br><hr><br><hr>
+        <!--Submit Button-->
+            <input type="Submit" onclick="submission()" class="pbutton" placeholder="Submit"><br><hr><br><hr>
+        <!--Reset Button-->    
+            <input type="Reset" class="pbutton" placeholder="Reset">
+        </form>
+    </div>
+        <script src="{% static 'reviews/scripts.js' %}"></script>
+        <script src="{% static 'reviews/leaflet.js' %}"></script>
+    </body>
+</html>
 </body>
 </html>
