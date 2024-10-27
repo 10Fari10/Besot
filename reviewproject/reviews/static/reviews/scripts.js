@@ -25,8 +25,7 @@
         latVal: lat,           
         longVal: long,               //username and parent probably should be added here. not sure if replies should be a list
         review: review_text,        //replies is number of replies
-        
-        likes: 0,                   //Placeholder values
+                        //Placeholder values
         replies: 0,
         parent:-1,
     

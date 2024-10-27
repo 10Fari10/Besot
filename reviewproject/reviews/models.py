@@ -18,5 +18,9 @@ class Posts(models.Model):
     likes = models.IntegerField()
     parent = models.CharField(max_length=255,null=True)
     replies = models.IntegerField(null=True)
+
+class Likes(models.Model):
+    username = models.CharField(max_length=255)
+    postID = models.IntegerField(null=True)
     
     

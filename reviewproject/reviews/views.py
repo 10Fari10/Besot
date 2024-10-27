@@ -6,6 +6,7 @@ from django.template import loader
 from reviews.models import Users
 from reviews.models import Posts
 from reviews.models import Pins
+from reviews.models import Likes
 from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_protect
@@ -72,8 +73,16 @@ def likeHandle(request):
    post = Posts.objects.get(id=id)
    if(Posts.objects.filter(id=id).count() ==1):
     if request.user.is_authenticated:
-     post.likes = post.likes+1
-     post.save()
+     user = request.user.get_username()
+     if(Likes.objects.filter(username=user,postID=id).count()>0):
+        post.likes = post.likes-1
+        post.save()
+        Likes.objects.filter(username=user,postID=id).delete()
+     else:
+        post.likes = post.likes+1
+        post.save()
+        like = Likes(username=user,postID=id)
+        like.save()
    return JsonResponse({"likes": post.likes}, status=200)
    
   return JsonResponse({"error": "Post not found"}, status=404)
