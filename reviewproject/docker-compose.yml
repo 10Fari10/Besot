@@ -13,6 +13,12 @@ services:
       sh -c "python manage.py makemigrations reviews && python manage.py migrate && python manage.py runserver 0.0.0.0:8080"
     environment:
       WAIT_HOSTS: postgres:5432
+      SECRET_KEY: #Replace me
+      DB_NAME: sqlcse312
+      DB_USER: user 
+      DB_PASSWORD: password
+      DB_HOST: postgres
+      DB_PORT: 5432
     ports:
       - "8080:8080"
     depends_on:
