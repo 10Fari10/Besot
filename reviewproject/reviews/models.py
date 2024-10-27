@@ -19,3 +19,4 @@ class Posts(models.Model):
     parent = models.CharField(max_length=255,null=True)
     replies = models.IntegerField(null=True)
     
+    

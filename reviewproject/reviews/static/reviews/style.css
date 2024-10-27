@@ -10,12 +10,14 @@ body{
   border-style: solid;
   margin-right: auto;
   border-radius: 1.5px;
+  display: flex;
+  justify-content: center;
 }
 
 #logobox{
   width: 97%;
   height: 100px;
-  background-image: url("{% static 'reviews/images/Logo1.png' %}");
+  background-image: url("{% static 'reviews/images/Logo1.jpg' %}");
   background-size: cover;
   /*border-color: white;*/
   /*border-style: solid;*/
@@ -64,6 +66,7 @@ hr{
   border-style: solid;
   width:800px;
   height:500px;
+  z-index: 10000;
 }
 .logbox{
   position: fixed;
@@ -161,21 +164,69 @@ width:350px;
 position: absolute;
 left:25%;
 }
+
+.review-container {
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  width: 100%; 
+  max-width: 600px; 
+  margin: 0 auto; 
+  padding: 20px; 
+  background-color: white; 
+  border: 1px solid #ccc; 
+  border-radius: 8px; 
+  overflow-y: scroll;
+}
+
+.pinform {
+  width: 100%; 
+  padding: 10px; 
+  margin: 10px 0; 
+  border: 1px solid #eee; 
+  border-radius: 4px; 
+  background-color: #f9f9f9; 
+  text-align: center; 
+  z-index: 1000000;
+}
+
+.pinform:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.pinform p {
+  margin: 5px 0; 
+}
+
+.likeBtn {
+  background-color: #007bff; 
+  color: white; 
+  border: none; 
+  border-radius: 4px; 
+  padding: 8px 12px;
+  cursor: pointer; 
+}
+
+.likeBtn:hover {
+  background-color: #0056b3;
+}
+
 .welcome_username {
   position: absolute;
-  background-color:#00338d;
-  color:white;
+  background-color: #00338d;
+  color: white;
   font-family: "Abril Fatface", serif;
-  border-style:solid;
-  border-color:#00338d;
-  right:%;
+  border-style: solid;
+  border-color: #00338d;
+  right: 1%;      
   top: -1%;
 }
 .welcome_user_container{
   display: inline;
 }
 .welcome_user{
-    position: absolute;
+  position: absolute;
   /*background-color:#2CABF6;*/
   background-color:darkviolet;
   color:white;

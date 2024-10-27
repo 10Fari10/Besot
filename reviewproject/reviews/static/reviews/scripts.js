@@ -29,7 +29,7 @@
         likes: 0,                   //Placeholder values
         replies: 0,
         parent:-1,
-        username:"",
+    
     };
 
     try {
@@ -44,14 +44,13 @@
 
         if (response.ok) {
             sent_data = await response.json();
-            renderPins(pins);
+            fetchPinsAndReviews(); 
             console.log("OK!:", sent_data);
 
             //document.getElementById("picVal").value = '';
             document.getElementById("latVal").value = '';
             document.getElementById("longVal").value = '';
             document.getElementById("revVal").value = '';
-            pasteReviews(lat, long);
             popDown();  
         }
         else{
@@ -127,68 +126,68 @@
       signDown();
   }
   
-
-  function pasteReviews(lat,long){
-
+  function pasteReviews(lat, long) {
     fetch(`/send_post/?lat=${lat}&long=${long}`, {
         method: "GET",
         headers: {
-
             'Content-Type': 'application/json',
             'X-CSRFToken': CSRF_TOKEN
         },
     })
-  
     .then(response => {
-        if(!response.ok){
-            throw new error("ERROR!")
+        if (!response.ok) {
+            throw new Error("ERROR!");
         }
-        else{
-            return response.json();
-        }
+        return response.json(); 
     })
     .then(data => {
-        displayReviews(data.allposts); 
+        displayReviews(data); 
     })
+   
 }
-  
 
-  function displayReviews(allPosts){
-    const dynamiccontainer = document.getElementById("reviewcontainer");
-    dynamiccontainer.innerHTML = "";
+function displayReviews(allPosts) {
+    const dynamiccontainer = document.getElementById("revcontainer");
+    dynamiccontainer.innerHTML = ""; 
 
-    for (let i = 0; i < allPosts.length; i++){
-        const id = document.createElement("input");
-        id.setAttribute("type", "hidden");
-        id.setAttribute("name", "id");
-        id.setAttribute("value", post.id);
+    if (allPosts.length === 0) {
+        const nomessage = document.createElement("p")
+        nomessage.textContent = "No reviews available."
+        dynamiccontainer.appendChild(nomessage)
+        return;
+    }
+
+    for (let i in allPosts) {
         const post = allPosts[i];
         const postElement = document.createElement("div");
-        postElement.classList.add("pinform");                           //i am using textcontent instead of innerhtml due to security risks 
-        const Elem_user = document.createElement("p")
-        Elem_user.textContent = post.username;
+        postElement.classList.add("pinform");
+
+        const Elem_user = document.createElement("p");
+        Elem_user.textContent = `Reviewed by : ${post.username}`;
         postElement.appendChild(Elem_user);
-        const Elem_body = document.createElement("p")              
+
+        const Elem_body = document.createElement("p");
         Elem_body.textContent = post.body;
         postElement.appendChild(Elem_body);
+
         const Elem_likes = document.createElement("span");
         Elem_likes.textContent = `Likes: ${post.likes}`;
-        postElement.appendChild(Elem_likes)
-        const likeButton = document.createElement("button");
-        likeButton.textContent = "Like";
-        likeButton.classList.add("likeBtn");
+        postElement.appendChild(Elem_likes);
+
+        const likeButton = document.createElement("button")
+        likeButton.textContent = "Like"
+        likeButton.classList.add("likeBtn")
         likeButton.onclick = () => {
-            likesincrement(post.id, likesElement);
+            likesincrement(post.id, Elem_likes)
         };
         postElement.appendChild(likeButton);
+
         dynamiccontainer.appendChild(postElement);
     }
-    
-
-  }
+}
 
 
-  function likesincrement(){
+  function likesincrement(postId, likesElement){
 
     fetch('/like/', {
         method : "POST",
@@ -196,7 +195,7 @@
             'Content-Type': 'application/json',
             'X-CSRFToken': CSRF_TOKEN 
         },
-        body: JSON.stringify({ parent: post.parent })
+        body: JSON.stringify({ id: postId })
     })
 
     .then(response => {

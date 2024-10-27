@@ -1,5 +1,6 @@
 
 from django.urls import path
+
 from reviews.views import *
 
 urlpatterns = [
@@ -8,4 +9,5 @@ urlpatterns = [
     path("map_post/",postHandle,name='map_post/'),
     path("like/",likeHandle,name='like/'),
     path("pins/",sendPins,name="pins/")
+    
     ] 
