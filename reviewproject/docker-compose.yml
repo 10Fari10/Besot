@@ -11,7 +11,7 @@ services:
     build: .
     environment:
       WAIT_HOSTS: postgres:5432
-      SECRET_KEY: #Replace me
+      SECRET_KEY: Replace Me
       DB_NAME: sqlcse312
       DB_USER: user 
       DB_PASSWORD: password
