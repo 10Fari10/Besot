@@ -38,7 +38,7 @@ def postHandle(request):
         print(lat)
         long = float(req_body["longVal"])
         print(long)
-        body = html.escape(req_body.get("review", ""))
+        body = req_body.get("review", "")
         parent = req_body.get("parent", -1)
         likes = req_body.get("likes", 0)
         replies = req_body.get("replies", 0)
@@ -98,8 +98,8 @@ def sendPost(request):
   if post.exists():
     for p in post:
       parent_content = {}
-      parent_content["username"] = p["username"]
-      parent_content["body"] = p["body"]
+      parent_content["username"] = html.escape(p["username"])
+      parent_content["body"] = html.escape(p["body"])
       parent_content["likes"] = p["likes"]
       parent_content["parent"] = p["parent"]
       parent_content["reply_num"] = p["replies"]
@@ -108,8 +108,8 @@ def sendPost(request):
       reply = Posts.objects.filter(parent=p["id"]).order_by("id").values()
       for r in reply:
         reply_content = {}
-        reply_content["username"] = r["username"]
-        reply_content["body"] = r["body"]
+        reply_content["username"] = html.escape(r["username"])
+        reply_content["body"] = html.escape(r["body"])
         reply_content["likes"]= r["likes"]
         reply_content["parent"]= r["parent"]
         reply_content["reply_num"]= r["replies"]
