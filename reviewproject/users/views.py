@@ -5,6 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 # Create your views here.
 
+
 def login_user(request):
     if request.method == 'POST':
         # username = request.POST["username"]

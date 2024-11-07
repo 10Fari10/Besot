@@ -15,7 +15,19 @@
    {% if user.is_authenticated %}
     <a class="logbutton" href="{% url 'logout' %}">Logout</a>
    <div class="welcome_user_container">
-  
+        <!--pfp container-->
+        <div class="circle" id="user_pfp" onclick="pfp_up()"> </div>
+        <!--Change pfp form-->
+        <form id="user_form" class="u_form">
+            <!-- Close Button -->    
+           <button  type="button" class="x" id="close_user_pfp" onclick="pfp_down()">&times;</button><br><hr><br>
+           <!-- pfp upload -->    
+           <input type="file" id="pfp_Val" class="pbutton"><br><hr><br><hr>   
+           <!--Submit button-->
+           <input type="submit" class="pbutton" value="Submit" onclick="pfp_submission(event)"><br><hr><br><hr>
+           </form>
+
+
        <h2 class="welcome_user"> {{ user.username }} </h2>
    </div>
    {% else %}
@@ -59,7 +71,7 @@
     </div><br><hr>
 
 <!--introduction--> 
-<div class="box">Welcome! This is a website for anyone in the 716 area to share cool hangout spots from a cool part of a park to a street with a nice view. To make a review, register and login. Then, click on the map and make a pin! Click on other pins to see and like other people's reviews!</div>
+<div class="box">Welcome! This is a website for anyone in the 716 area to share cool hangout spots. From a cool part of a park to a street with a nice view. To make a review hit the button at the bottom right: upload a clear picture, then put the adress, your rating, and quick review of your spot!</div>
 <!--post container,map should be here-->
 <br><br><div class="bodcontainer"><hr>
     <div id="map" style="height: 500px; width: 100%;"></div>
@@ -70,6 +82,7 @@
 <div class="revcont">
     <div id="revcontainer" class="review-container"></div>
 </div>
+
 
 
 <div class="popoverlay" id="addPost">

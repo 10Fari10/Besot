@@ -7,6 +7,7 @@ from reviews.models import Users
 from reviews.models import Posts
 from reviews.models import Pins
 from reviews.models import Likes
+from reviews.models import ProfilePics
 from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_protect
@@ -23,6 +24,22 @@ logging.debug("Logging started on %s for %s" % (logging.root.name, logging.getLe
 
 def main_homepage(request):
     return render(request, 'reviews/homepage.html') 
+
+
+#Gets Profile pic
+@csrf_protect
+def loadpfp(request):
+    if request.method=='GET':
+       username = request.user.get_username()
+       pass
+    
+
+#Post Profile pic
+@csrf_protect 
+def postpfp(request):
+   if request.method=='POST':
+       username = request.user.get_username()
+       pass
 
 @csrf_protect
 #Receives post requests from users posting and replying

@@ -4,6 +4,62 @@
   function popDown(){
   document.getElementById("addPost").style.display="none";
   }
+//opens profile pic form
+  document.getElementById("user_pfp").addEventListener("click", pfp_up);
+  function pfp_up(){
+  document.getElementById("user_form").style.display="block";
+  }
+//closes profile pic form
+  document.getElementById("close_user_pfp").addEventListener("click", pfp_down);
+  function pfp_down(){
+  document.getElementById("user_form").style.display="none";
+  }
+
+
+//submission for profile pic form
+  document.getElementById('user_pfp').addEventListener('submit', pfp_submission);
+  async function pfp_submission(event) {
+    event.preventDefault(); 
+    const pfp = document.getElementById("pfp_Val").value;
+    if(pfp==''){
+        alert("Please choose a file.");
+    }
+    else{
+    const data_to_send = {
+        Profile: pfp,           
+        parent:-1,
+    };
+    try {
+        const response = await fetch('pfp_post', {
+            method: 'POST',
+            headers: {
+                //We can make profile madatory png or jpg or make it flexible up to you
+                'Content-Type': 'image/png',
+                'X-CSRFToken': CSRF_TOKEN
+            },
+            body: data_to_send
+        });
+
+        if (response.ok) {
+            sent_data = await response.json();
+            console.log("OK!:", sent_data);
+            //function might be needed here
+            document.getElementById("picVal").value = '';
+            
+            pfp_down();  
+        }
+        else{
+            alert("Failed to insert image.");
+            pfp_down();
+        }
+    } catch (error) {
+        console.error("ERROR:", error);
+        alert("An error occurred while submitting your profile image.");
+    }
+}
+}
+//function to actually load the pfp needs to be written
+
   //submission function-once form is completed with all fields entered with a value (not empty else different alert will appear)
   //once check field are filled will empty values and automatically close
 
@@ -64,66 +120,7 @@
     }
 }
 }
-  //logme function- when Log-in button is click the log in form will appear
-  document.getElementById("lButton").addEventListener("click",logme);
-  function logme(){
-  document.getElementById("logging").style.display="block";
-  }
-  //logdown function- when 'x' is clicked log-in form will dissappear
-  document.getElementById("closeLog").addEventListener("click",logDown);
-  function logDown(){
-      document.getElementById("logging").style.display="none";
-  }
-  //log_me_in fuction-once user clicks log in button field are checked the both are filled (or alerts appear) then values are
-  //cleared and form disappear
-  function log_me_in(event){
-      event.preventDefault();
-      const user = document.getElementById("useVal");
-      const password = document.getElementById("passVal");
-      if(user.value == ''){
-          alert("Please enter a username.");
-      }
-      if(password.value == ''){
-          alert("Please enter a password.");
-      }
-      user.value = '';  
-      password.value = '';  
-      logDown();  
-  }
-  //signme function- sign up form appear when clicking Sign-up button
-  document.getElementById("sButton").addEventListener("click",signme);
-  function signme(){
-      document.getElementById("signing").style.display="block";
-   }
-  //signDown function- when 'x' is sign up form is click the form disappears
-  document.getElementById("closeSign").addEventListener("click",signDown);
-  function signDown(){
-      document.getElementById("signing").style.display="none";
-   }
-  //sign_me_in function- when sign up button is clicked checks if all input are filled & password match otherwise alerts appear
-  //fields are cleared and form closes
-  function sign_me_in(event){
-      event.preventDefault();
-      const n_user=document.getElementById("suseVal").value;
-      const n_p_1=document.getElementById("spassVal1").value;
-      const n_p_2=document.getElementById("spassVal2").value;
-      if(n_user==''){
-          alert("Please enter a username.");
-      }
-      if(n_p_1==''){
-          alert("Please enter a password.");
-      }
-      if(n_p_2==''){
-          alert("Please re-type password.");
-      }
-      if(n_p_1!=n_p_2 && (n_p_1!='')&&(n_p_2!='')){
-          alert("Password don't match please try again!");
-      }
-      n_user.value='';
-      n_p_1.value='';
-      n_p_2.value='';
-      signDown();
-  }
+
   
   function pasteReviews(lat, long) {
     fetch(`/send_post/?lat=${lat}&long=${long}`, {
@@ -160,6 +157,10 @@ function displayReviews(allPosts) {
         const post = allPosts[i];
         const postElement = document.createElement("div");
         postElement.classList.add("pinform");
+
+        const Elem_pfp=document.createElement("div");
+        Elem_pfp.classList.add("pfp");
+        postElement.appendChild(Elem_pfp);
 
         const Elem_user = document.createElement("p");
         Elem_user.textContent = `Reviewed by : ${post.username}`;
