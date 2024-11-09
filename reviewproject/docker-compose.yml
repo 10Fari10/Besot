@@ -1,4 +1,7 @@
 services:
+  redis:
+    image: redis:6.2-alpine
+    restart: always
   postgres:
     image: postgres
     environment:

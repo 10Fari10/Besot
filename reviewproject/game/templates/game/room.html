@@ -1,0 +1,30 @@
+<!-- chat/templates/chat/room.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Point to Point</title>
+</head>
+<body>
+    <input id="submit" type="button" value="Send">
+    {{ room_name|json_script:"room-name" }}
+    <script>
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
+
+        const game_socket = new WebSocket('ws://' + window.location.host+ '/ws/game/'+ roomName+ '/');
+
+        game_socket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            console.log(data)
+        };
+
+        game_socket.onclose = function(e) {
+            console.error('Socket closed unexpectedly');
+        };
+
+        document.getElementById("submit").onclick = function(e) {
+            game_socket.send(JSON.stringify({'message': "Testing"}));
+        };
+    </script>
+</body>
+</html>
