@@ -1,9 +1,5 @@
 from django.shortcuts import render
 import json
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
-from django.template import loader
-from reviews.models import Users
 from reviews.models import Posts
 from reviews.models import Pins
 from reviews.models import Likes
