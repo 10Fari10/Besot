@@ -6,19 +6,21 @@
     <title>Rooms</title>
 </head>
 <body>
-    <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
+    <input id="room-name-submit-alpha" type="button" value="Room Alpha"><br>
+    <input id="room-name-submit-bravo" type="button" value="Room Bravo"><br>
+    <input id="room-name-submit-charlie" type="button" value="Room Charlie"><br>
 
     <script>
-        document.querySelector('#room-name-input').focus();
-        document.querySelector('#room-name-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  
-                document.querySelector('#room-name-submit').click();
-            }
+        document.querySelector('#room-name-submit-alpha').onclick = function(e) {
+            var roomName = "alpha";
+            window.location.pathname = '/game/' + roomName + '/';
         };
-
-        document.querySelector('#room-name-submit').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input').value;
+        document.querySelector('#room-name-submit-bravo').onclick = function(e) {
+            var roomName = "bravo";
+            window.location.pathname = '/game/' + roomName + '/';
+        };
+        document.querySelector('#room-name-submit-charlie').onclick = function(e) {
+            var roomName = "charlie";
             window.location.pathname = '/game/' + roomName + '/';
         };
     </script>

@@ -21,13 +21,15 @@ def index(request):
 #Once solution is submitted, lobby name is used to lookup mapdata and compare solution
 #If verified, query is made to user table and all users with matching lobby are pulled, sorted by time, and sent
 def room(request, room_name):
-    #Store map solution by lobby name on load, sample below
     mapSolutions = {"alpha":"r1,r2,r3,r4"}
-    #Store and send pin location/id by lobby name on load, sample below
     mapLayouts = {"alpha":json.dumps({"r1":[1,2],"r2":[2,3],"r3":[4,2]})}
-    map = MapData(lobbyID = room_name, pinLocations = mapLayouts[room_name],solution=mapSolutions[room_name])
-    map.save()
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated or (room_name not in mapSolutions):
         return HttpResponse('Unauthorized', status=401)
     else:
+        #Store map solution by lobby name on load, sample below
+        
+        #Store and send pin location/id by lobby name on load, sample below
+       
+        map = MapData(lobbyID = room_name, pinLocations = mapLayouts[room_name],solution=mapSolutions[room_name])
+        map.save()
         return render(request, "game/room.html", {"room_name": room_name,"map_layout":mapLayouts[room_name]})
