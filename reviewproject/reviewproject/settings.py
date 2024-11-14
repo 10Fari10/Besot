@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'reviews',
     'users',
     'game',
+    "widget_tweaks",
     
 ]
 
@@ -155,3 +156,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'

@@ -8,3 +8,4 @@ Pillow
 channels
 channels_redis
 daphne
+django-widget-tweaks

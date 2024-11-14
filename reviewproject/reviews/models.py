@@ -15,9 +15,10 @@ class Posts(models.Model):
     body = models.CharField(max_length=255,default='')
     lat = models.FloatField(null=True)
     long = models.FloatField(null=True)
-    likes = models.IntegerField()
+    likes = models.IntegerField(default=0)
     parent = models.CharField(max_length=255,null=True)
     replies = models.IntegerField(null=True)
+    image = models.ImageField(upload_to='posts/')
 
 class Likes(models.Model):
     username = models.CharField(max_length=255)
@@ -26,5 +27,4 @@ class Likes(models.Model):
 class ProfilePics(models.Model):
     username = models.CharField(max_length=255)
     image=models.ImageField(upload_to='image/')
-    
-    
+
