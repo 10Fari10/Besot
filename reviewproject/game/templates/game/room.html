@@ -1,32 +1,40 @@
 <!-- chat/templates/chat/room.html -->
+{% load static %}
 <!DOCTYPE html>
 <html>
+    <link rel="stylesheet" href="{% static 'reviews/game.css' %}">
+    <link rel="stylesheet" href="{% static 'reviews/game_leaflet.css' %}">
 <head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <meta charset="utf-8"/>
     <title>Point to Point</title>
 </head>
 <body>
-    <input id="submit" type="button" value="Send">
+    <!--Redirect to homepage-->
+    <div class="back_button">&larr;</div>
+    <br>
+    <!--Lobby ID-->
+    <div class="info_box">Lobby #</div><br>
+    <!--Time is here-->
+    <div class="info_box">Time</div><br>
+    <!--Leaderboard info is displayed here-->
+    <div class="leader_board">Lead</div>
+    <!--Game is in this container-->
+    <div class="game_container"> 
+        <div id="map" style="width:100%; height:400px;"></div>
+        <script src="{% static 'reviews/game_leaflet.js' %}"></script>
+    </div>
+    <br>
+    <!--User's path display-->
+    <div class="pin_bar">Pin</div><br>
+    <!--Reset Button-->
+    <button class="button" type="Reset"></button>
+    
+
+<input id="submit" type="Submit"  class="sub_button" > 
     {{ room_name|json_script:"room-name" }}
     {{ map_layout|json_script:"map_layout" }}
-    <script>
-        const roomName = JSON.parse(document.getElementById('room-name').textContent);
-        const layout = JSON.parse(document.getElementById('map_layout').textContent);
-        const game_socket = new WebSocket('ws://' + window.location.host+ '/ws/game/'+ roomName+ '/');
-
-        game_socket.onmessage = function(e) {
-            const data = JSON.parse(e.data);
-            console.log(data)
-            console.log(layout)
-        };
-
-        game_socket.onclose = function(e) {
-            console.error('Socket closed unexpectedly');
-        };
-
-        document.getElementById("submit").onclick = function(e) {
-            game_socket.send(JSON.stringify({'message': "Testing"}));
-        };
-    </script>
+    <script src="{% static 'reviews/game_scripts.js' %}"></script>
 </body>
 </html>

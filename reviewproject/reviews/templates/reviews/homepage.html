@@ -9,6 +9,7 @@
 <head>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <title>Buffalo Hangout</title>
 </head>
     <body>
    <!--log-in and sign in buttons-->
@@ -107,7 +108,6 @@
     </form>
 </div>
         <script src="{% static 'reviews/scripts.js' %}"></script>
-        <script src="{% static 'reviews/leaflet.js' %}"></script>
         <script src ="{% static 'reviews/map.js' %}"></script>
 
         <script> var CSRF_TOKEN = '{{ csrf_token }}';</script>
