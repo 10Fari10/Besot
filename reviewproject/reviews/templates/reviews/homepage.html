@@ -8,8 +8,8 @@
 <!--map api set up-->
 <head>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <scirpt src="https://cdn.tailwindcss.com"></scirpt>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <title>Buffalo Hangout</title>
 </head>
     <body>
    <!--log-in and sign in buttons-->
@@ -20,10 +20,10 @@
         <div class="circle" id="user_pfp" onclick="pfp_up()"> </div>
         <!--Change pfp form-->
         <form id="user_form" class="u_form">
-            <!-- Close Button -->    
+            <!-- Close Button -->
            <button  type="button" class="x" id="close_user_pfp" onclick="pfp_down()">&times;</button><br><hr><br>
-           <!-- pfp upload -->    
-           <input type="file" id="pfp_Val" class="pbutton"><br><hr><br><hr>   
+           <!-- pfp upload -->
+           <input type="file" id="pfp_Val" class="pbutton"><br><hr><br><hr>
            <!--Submit button-->
            <input type="submit" class="pbutton" value="Submit" onclick="pfp_submission(event)"><br><hr><br><hr>
            </form>
@@ -35,7 +35,7 @@
    <a class="logbutton" href="{% url 'login_user' %}">Login</a>
    <p>tst</p>
    <a class="logbutton" href="{% url 'register_user' %}">Register</a>
-   {% endif %}      
+   {% endif %}
    <p>tst</p>
    <a class="logbutton" href="/game/">Game</a>
 <div class="logbox" id="logging">
@@ -73,7 +73,7 @@
     <img src="{% static 'reviews/images/Logo1.jpg' %}" alt="Logo">
     </div><br><hr>
 
-<!--introduction--> 
+<!--introduction-->
 <div class="box">Welcome! This is a website for anyone in the 716 area to share cool hangout spots. From a cool part of a park to a street with a nice view. To make a review hit the button at the bottom right: upload a clear picture, then put the adress, your rating, and quick review of your spot!</div>
 <!--post container,map should be here-->
 <br><br><div class="bodcontainer"><hr>
@@ -89,27 +89,41 @@
 
 
 <div class="popoverlay" id="addPost">
-    <form id="reviewForm">
+     <button onclick="popDown()" type="button" class="x" id="closePop">&times;</button><br><hr><br>
+    <form id="reviewForm" enctype="multipart/form-data" method="POST">
+
         <!-- CSRF Token -->
-        
-        <!-- Close Button -->    
-        <button onclick="popDown()" type="button" class="x" id="closePop">&times;</button><br><hr><br>
-        <!-- Media Upload Field for now omit for potentially project prt2 -->    
-        <!--<input type="file" id="picVal" class="pbutton"><br><hr><br><hr>-->
-        <!-- Review Field -->           
+        {% csrf_token %}
+        <!-- Close Button -->
+<!--        <button onclick="popDown()" type="button" class="x" id="closePop">&times;</button><br><hr><br>-->
+        <!-- Media Upload Field for now omit for potentially project prt2 -->
+        <input type="file" id="picVal" class="pbutton"><br><hr><br><hr>
+
+
+
+
+        <!-- Review Field -->
         <input type="text" placeholder="Leave Your Review Here" id="revVal" class="pinput"><br><hr><br><hr>
         <!-- Hidden Latitude and Longitude Fields -->
         <input type="hidden" id="latVal" name="lat" value="">
         <input type="hidden" id="longVal" name="long" value="">
         <!-- Submit Button -->
         <input type="submit" class="pbutton" value="Submit" onclick="submission(event)"><br><hr><br><hr>
-        <!-- Reset Button -->    
-        <input type="reset" class="pbutton" value="Reset">
+<!--        <input type="submit" class="pbutton" value="Submit" /><br><hr><br><hr>-->
+        <!-- Reset Button -->
+
+
+<!--     <input type="submit" class="pbutton" value="Submit"><br><hr><br><hr>-->
+        <input type="reset" class="pbutton" value="Reset" />
     </form>
+
 </div>
         <script src="{% static 'reviews/scripts.js' %}"></script>
+        <script src="{% static 'reviews/leaflet.js' %}"></script>
         <script src ="{% static 'reviews/map.js' %}"></script>
 
         <script> var CSRF_TOKEN = '{{ csrf_token }}';</script>
     </body>
 </html>
+
+
