@@ -12,6 +12,9 @@ game_socket.onclose = function(e) {
     console.error('Socket closed unexpectedly');
 };
 
+//text input is placeholder. Remove when pin selection is implemented.
 document.getElementById("submit").onclick = function(e) {
-    game_socket.send(JSON.stringify({'message': "Testing"}));
+    solution = document.getElementById('test').value
+    console.log(solution)
+    game_socket.send(JSON.stringify({"solution":solution,"room":roomName}));
 };
