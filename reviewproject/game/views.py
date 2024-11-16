@@ -46,3 +46,11 @@ def room(request, room_name):
             map = MapData(lobbyID = room_name, pinLocations = mapLayouts[room_name],solution=mapSolutions[room_name])
             map.save()
         return render(request, "game/room.html", {"room_name": room_name,"map_layout":mapLayouts[room_name]})
+def getLeaderboards(request):
+    if not request.user.is_authenticated :
+        return HttpResponse('Unauthorized', status=401)
+    users = UserData.objects.filter(time__isnull=False).order_by('time')[:10]
+    if len(users) < 10:
+        users = UserData.objects.filter(time__isnull=False).order_by('time')
+
+    return render(request, "game/room.html", {'leaderboard': users})
