@@ -16,6 +16,8 @@
     <br>
     <!--Lobby ID-->
     <div class="info_box">Lobby #</div><br>
+    <!-- text input is placeholder. Remove when pin selection is implemented.-->
+    <input type="text" id="test"><br>
     <!--Time is here-->
     <div class="info_box">Time</div><br>
     <!--Leaderboard info is displayed here-->
@@ -28,6 +30,7 @@
     <br>
     <!--User's path display-->
     <div class="pin_bar">Pin</div><br>
+  
     <!--Reset Button-->
     <button class="button" type="Reset"></button>
     
@@ -35,6 +38,6 @@
 <input id="submit" type="Submit"  class="sub_button" > 
     {{ room_name|json_script:"room-name" }}
     {{ map_layout|json_script:"map_layout" }}
-    <script src="{% static 'reviews/game_scripts.js' %}"></script>
+    <script src="{% static 'reviews/game_script.js' %}"></script>
 </body>
 </html>

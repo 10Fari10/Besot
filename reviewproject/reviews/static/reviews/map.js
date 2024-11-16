@@ -25,6 +25,8 @@ function fetchPinsAndReviews() {
     .then(data => {
         if (data.pins) {
             data.pins.forEach(pin => {
+                // console.log(pin.lat)
+                // console.log(pin.long)
              L.marker([pin.lat, pin.long]).addTo(map)
              .bindPopup(`
                 <div>

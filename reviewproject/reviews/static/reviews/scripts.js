@@ -86,7 +86,7 @@
         parent:-1,
     
     };
-
+    
     try {
         const response = await fetch('/map_post/', {
             method: 'POST',
