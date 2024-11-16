@@ -33,19 +33,26 @@ def index(request):
 # -78.77999717562783
 def room(request, room_name):
     mapSolutions = {"alpha":"r1,r2,r3,r4"}
-    mapLayouts = {"alpha":json.dumps({"r1":[43.00235605877655,-78.77763672611523],
-                                      "r2":[42.999468562433165,-78.79463196260592],
-                                      "r3":[42.99849557114192,-78.80136997303279]})}
+    mapLayouts = {
+        "alpha": {
+            "r1": {"coords": [43.00235605877655, -78.77763672611523], "hint": "Start here, Clue 1!"},
+            "r2": {"coords": [42.999468562433165, -78.79463196260592], "hint": "Clue 2."},
+            "r3": {"coords": [42.99849557114192, -78.80136997303279], "hint": "Clue 3."},
+            "r4": {"coords": [43.00367421851207, -78.81184178541595], "hint": "Clue 4."}
+        }
+    }
     if not request.user.is_authenticated or (room_name not in mapSolutions):
         return HttpResponse('Unauthorized', status=401)
     else:
         #Store map solution by lobby name on load, sample below
         
         #Store and send pin location/id by lobby name on load, sample below
-        if(MapData.objects.filter(lobbyID=room_name).count() ==0):
-            map = MapData(lobbyID = room_name, pinLocations = mapLayouts[room_name],solution=mapSolutions[room_name])
-            map.save()
-        return render(request, "game/room.html", {"room_name": room_name,"map_layout":mapLayouts[room_name]})
+        #if(MapData.objects.filter(lobbyID=room_name).count() ==0):
+            #map = MapData(lobbyID = room_name, pinLocations = mapLayouts[room_name],solution=mapSolutions[room_name])
+            #map.save()
+             map_layout = mapLayouts[room_name]
+             return render(request, "game/room.html", {'map_layout': map_layout, 'room_name': room_name})
+
 def getLeaderboards(request):
     if not request.user.is_authenticated :
         return HttpResponse('Unauthorized', status=401)
