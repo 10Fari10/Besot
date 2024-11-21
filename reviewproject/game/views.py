@@ -3,6 +3,7 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from game.models import *
 import json
+import time
 
 import logging
 from django.conf import settings
@@ -54,10 +55,13 @@ def room(request, room_name):
              return render(request, "game/room.html", {'map_layout': map_layout, 'room_name': room_name})
 
 def getLeaderboards(request):
-    if not request.user.is_authenticated :
+    if not request.user.is_authenticated:
         return HttpResponse('Unauthorized', status=401)
     users = UserData.objects.filter(time__isnull=False).order_by('time')[:10]
     if len(users) < 10:
         users = UserData.objects.filter(time__isnull=False).order_by('time')
+    if len(users) >0:
+        return render(request, "game/room.html", {'leaderboard': users})
+    else:
+        return render(request, "game/index.html", {'message': 'No users found'})
 
-    return render(request, "game/room.html", {'leaderboard': users})

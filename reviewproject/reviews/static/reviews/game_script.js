@@ -18,3 +18,40 @@ document.getElementById("submit").onclick = function(e) {
     console.log(solution)
     game_socket.send(JSON.stringify({"solution":solution,"room":roomName}));
 };
+
+window.onload = function(){
+
+    let minutes = 0;
+    let seconds = 0;
+    let  tens = 0;
+    let appendMinutes = document.getElementById("minutes");
+     let appendSeconds = document.getElementById("seconds");
+     let appendTens = document.getElementById("tens");
+     let interval;
+
+     const startTimer = () => {
+         tens ++;
+         if (tens <= 9){
+             appendTens.innerHTML = '0'+ tens.toString();
+         }
+         if (tens>9){
+             appendTens.innerHTML = tens.toString();
+         }
+         if (tens > 99){
+              seconds ++;
+              appendSeconds.innerHTML = '0' + seconds.toString();
+              tens = 0 ;
+             appendTens.innerHTML = '00';
+         }
+         if (seconds > 9){
+             appendSeconds.innerHTML = seconds.toString();
+         }
+         if (seconds > 59){
+             minutes ++;
+             appendMinutes.innerHTML ='0'+ minutes.toString();
+             seconds = 0
+             appendSeconds.innerHTML = '00';
+         }
+
+     }
+}
