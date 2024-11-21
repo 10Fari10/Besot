@@ -71,3 +71,11 @@ body{
   text-align: center;
   border-radius: 50%;
 }
+.redirect{
+  height:50px;
+  width:250px;
+  background-color: black;
+  border-color: white;
+  border-style: solid;
+  color:white;
+  }
