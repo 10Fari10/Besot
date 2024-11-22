@@ -13,8 +13,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             let marker = L.marker(coords).addTo(map);
             marker.bindPopup(`</strong><br>${hint}`);
-        }
+            marker.on('click', function() {
+                selectPin(pinID);
+        });
+    }
     } else {
         console.error("map_layout element not found.");
     }
 });
+
+

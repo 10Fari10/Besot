@@ -9,5 +9,5 @@ class UserData(models.Model):
 
 class MapData(models.Model):
     lobbyID = models.CharField(max_length=255)
-    pinLocations= models.CharField(max_length=255)
-    solution = models.CharField(max_length=255)
+    pinLocations = models.TextField()  
+    solution = models.TextField()

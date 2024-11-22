@@ -14,4 +14,5 @@ urlpatterns = [
     path("pfp_load",loadpfp,name="pfp_load"),
     path("pfp_post",postpfp,name="pfp_post"),
     path('get_map_layout/<str:room_name>/', room, name='get_map_layout'),
+    path('completed_screen/', completed_screen, name='completed_screen'),
     ] 

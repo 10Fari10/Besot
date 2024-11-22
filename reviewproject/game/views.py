@@ -42,6 +42,7 @@ def room(request, room_name):
             "r4": {"coords": [43.00367421851207, -78.81184178541595], "hint": "Clue 4."}
         }
     }
+    #correct_solution_alpha = ["r1", "r2", "r3", "r4"]
     if not request.user.is_authenticated or (room_name not in mapSolutions):
         return HttpResponse('Unauthorized', status=401)
     else:
@@ -49,9 +50,10 @@ def room(request, room_name):
         
         #Store and send pin location/id by lobby name on load, sample below
         #if(MapData.objects.filter(lobbyID=room_name).count() ==0):
-            #map = MapData(lobbyID = room_name, pinLocations = mapLayouts[room_name],solution=mapSolutions[room_name])
-            #map.save()
+             map = MapData(lobbyID = room_name, pinLocations = mapLayouts[room_name],solution=mapSolutions[room_name])
+             map.save()
              map_layout = mapLayouts[room_name]
+             
              return render(request, "game/room.html", {'map_layout': map_layout, 'room_name': room_name})
 
 def getLeaderboards(request):
@@ -65,3 +67,7 @@ def getLeaderboards(request):
     else:
         return render(request, "game/index.html", {'message': 'No users found'})
 
+
+
+def completed_screen(request):
+    return render(request, "game/completed_screen.html")
