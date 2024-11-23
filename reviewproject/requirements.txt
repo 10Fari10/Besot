@@ -3,6 +3,8 @@ psycopg2
 django-environ
 bcrypt
 python-dotenv
+filetype
+python-magic
 whitenoise
 Pillow
 channels

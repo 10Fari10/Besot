@@ -69,61 +69,72 @@
   async function submission(event) {
     event.preventDefault();
     // const form = document.getElementById('reviewForm');
-    console.log("test1")
     const lat = document.getElementById("latVal").value;
     const long = document.getElementById("longVal").value;
     const review_text = document.getElementById("revVal").value;
     const img = document.getElementById("picVal");
 
-    if (img.files.length === 0) {
-        alert("Please select a file.");
-        return;
-    }
-
+    // if (img.files.length === 0) {
+    //     alert("Please select a file.");
+    //     return;
+    // }
+    if(review_text ==''){
+        alert("Please enter review.")
+    } else{
+    const data_to_send = {
+        latVal: lat,
+        longVal: long,
+        review: review_text,
+        replies: 0,
+        parent: -1,
+    };
     const file = img.files[0];
+    if (img.files.length !== 0){
     const reader = new FileReader();
     reader.onload = async function(e) {
         const bytes = e.target.result.split(',')[1]; // Base64 without metadata
         console.log(bytes);
         console.log(file.name);
-        const data_to_send = {
-            latVal: lat,
-            longVal: long,
-            review: review_text,
-            replies: 0,
-            parent: -1,
-            img: bytes,
-            img_name: file.name
-        };
-
-        try {
-            const response = await fetch('/map_post/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': CSRF_TOKEN
-                },
-                body: JSON.stringify(data_to_send)
-            });
-
-            if (response.ok) {
-                const sent_data = await response.json();
-                fetchPinsAndReviews();
-                console.log("Post created:", sent_data);
-                document.getElementById("latVal").value = '';
-                document.getElementById("longVal").value = '';
-                document.getElementById("revVal").value = '';
-                popDown();
-            } else {
-                alert("Failed to create post.");
-                popDown();
-            }
-        } catch (error) {
-            console.error("ERROR:", error);
-            alert("An error occurred while submitting your review.");
-        }
-    };
+        console.log("tead1");
+        data_to_send.img = bytes;
+        data_to_send.img_name = file.name;
+        send(data_to_send);
+    } 
     reader.readAsDataURL(file);
+        }else{
+        send(data_to_send);
+    }
+    }
+    
+}
+async function send(data_to_send) {
+    try {
+        console.log("tbb")
+        const response = await fetch('/map_post/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': CSRF_TOKEN
+            },
+            body: JSON.stringify(data_to_send)
+        });
+        
+        if (response.ok) {
+            const sent_data = await response.json();
+            fetchPinsAndReviews();
+            console.log("Post created:", sent_data);
+            document.getElementById("latVal").value = '';
+            document.getElementById("longVal").value = '';
+            document.getElementById("revVal").value = '';
+            popDown();
+        } else {
+            alert("Failed to create post.");
+            popDown();
+        }
+    } catch (error) {
+        console.error("ERROR:", error);
+        alert("An error occurred while submitting your review.");
+    }
 }
 
 
@@ -171,10 +182,12 @@ function displayReviews(allPosts) {
         Elem_user.textContent = `Reviewed by : ${post.username}`;
         postElement.appendChild(Elem_user);
 
+        if("image" in post){
         const img_body = document.createElement("img");
         img_body.src = post.image;
         img_body.alt = "Review";
         postElement.appendChild(img_body);
+        }
 
         const Elem_body = document.createElement("p");
         Elem_body.textContent = post.body;
