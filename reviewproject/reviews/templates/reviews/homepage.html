@@ -74,7 +74,7 @@
     </div><br><hr>
 
 <!--introduction-->
-<div class="box">Welcome! This is a website for anyone in the 716 area to share cool hangout spots. From a cool part of a park to a street with a nice view. To make a review hit the button at the bottom right: upload a clear picture, then put the adress, your rating, and quick review of your spot!</div>
+<div class="box">Welcome! From the most authentic pizzerias to the lushest local parks, all locations in the 716 area are open to review.<br>To make a review:<br>1. Click the button on the bottom right<br>2. Add your review and a picture<br>3. Click submit</div>
 <!--post container,map should be here-->
 <br><br><div class="bodcontainer"><hr>
     <div id="map" style="height: 500px; width: 100%;"></div>
@@ -90,8 +90,11 @@
 
 <div class="popoverlay" id="addPost">
      <button onclick="popDown()" type="button" class="x" id="closePop">&times;</button><br><hr><br>
-    <form id="reviewForm" enctype="multipart/form-data" method="POST">
-
+     
+     <form id="reviewForm" enctype="multipart/form-data" method="POST">
+        
+        <!-- OPEN: Please center properly -->
+        <p class ="file_remind">JPEG and PNG files only</p>
         <!-- CSRF Token -->
         {% csrf_token %}
         <!-- Close Button -->

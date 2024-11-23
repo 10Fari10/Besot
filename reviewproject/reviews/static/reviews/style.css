@@ -33,7 +33,7 @@ hr{
 }
 .box{
   width: 90%;
-  height: 125px;
+  height: 170px;
   border-color: white;
   border-style: solid;
   color:white;
@@ -256,3 +256,10 @@ left:25%;
   top:-1%;
   right:90%;
 }
+.file_remind{
+  color:white;
+  font-family: "Abril Fatface", serif;
+  font-size: 17px;
+  text-align: center;
+}
+
