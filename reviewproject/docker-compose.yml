@@ -1,4 +1,14 @@
 services:
+  nginx:
+    build: ./nginx
+    ports: 
+      - '80:80'
+      - '443:443'
+    depends_on:
+      - web
+    volumes:
+    - media_volume:/home/app/web/media
+    - static_volume:/home/app/web/static_files
   redis:
     image: redis:6.2-alpine
     restart: always
@@ -18,7 +28,14 @@ services:
       DB_PASSWORD: password
       DB_HOST: postgres
       DB_PORT: 5432
-    ports:
-      - "8080:8080"
+    # ports:
+    #  - '8080:8080'
     depends_on:
       - postgres
+    volumes:
+    - media_volume:/home/app/web/media
+    - static_volume:/home/app/web/static_files
+volumes:
+  static_volume:
+  media_volume:
+    

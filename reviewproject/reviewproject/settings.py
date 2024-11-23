@@ -32,7 +32,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = ["localhost",'web']
 
 
 # Application definition
@@ -140,7 +140,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'reviews', 'static'),  # Adjusted path
 ]
 
-DEBUG = False
+DEBUG = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -157,3 +157,5 @@ CHANNEL_LAYERS = {
 }
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
+
+CSRF_TRUSTED_ORIGINS = ['https://localhost']

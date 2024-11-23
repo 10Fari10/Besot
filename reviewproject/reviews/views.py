@@ -6,15 +6,17 @@ from django.core.files.base import ContentFile
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import loader
-from reviews.models import Users
-from reviews.models import Posts
-from reviews.models import Pins
-from reviews.models import Likes
-from reviews.models import ProfilePics
+from reviews.models import *
 from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_protect
 import html
+from PIL import Image
+import filetype
+import magic
+import tempfile
+import io
+import os
 
 import logging
 from django.conf import settings
@@ -55,20 +57,11 @@ def postHandle(request):
         return JsonResponse({'error': 'Please Login First'}, status=401)
 
     if request.method == "POST":
+        file_types = {"image/png":".png","image/jpeg":".jpg"}
         req_body = json.loads(request.body.decode())
-        img = req_body["img"]
-
-        # req_body = request.body.decode()
-        # req_body = json.loads(req_body)
-        # img = req_body["img"]
-        img = base64.b64decode(img)
-
-        # req_body = json.loads(req_body)
-        img_name = str(req_body['img_name'])
+        
         lat = float(req_body["latVal"])
-        print(lat)
         long = float(req_body["longVal"])
-        print(long)
         body = req_body.get("review", "")
         parent = req_body.get("parent", -1)
         likes = req_body.get("likes", 0)
@@ -79,7 +72,29 @@ def postHandle(request):
         pin.save()
         username = request.user.get_username()
         post = Posts(username=username, lat=lat, long=long, parent=parent, likes=likes, replies=replies, body=body)
-        post.image.save(img_name, ContentFile(img), save=True)
+        post.save()
+
+        #Image handling, install python-magic-bin==0.4.14 on local env if on windows 
+        if("img" in req_body):
+            img = req_body["img"]
+            img = base64.b64decode(img)
+            img_name = "image"+str(post.id)
+            path = "/home/app/web/media/"
+
+            with open(path+img_name, "wb") as file:
+                file.write(img)
+            mime = magic.from_file(path+img_name, mime=True)
+            if mime  in file_types:
+                new_name = img_name + file_types[mime]
+                im= Image.open(io.BytesIO(img))
+                size = (240,240)
+                im.thumbnail(size)
+                im.save(path+new_name)
+                post.image= "/media/"+new_name
+            else:
+                post.image = None
+            os.remove(path+img_name)
+        
         post.save()
 
         if parent != -1:
@@ -88,7 +103,7 @@ def postHandle(request):
             parent_post.save()
 
         SendPins = list(Pins.objects.values("lat", "long"))
-
+    
         return JsonResponse({"message": "Post created successfully!", "pins": SendPins}, status=201)
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
@@ -136,9 +151,9 @@ def sendPost(request):
                 "parent": p.parent,
                 "reply_num": p.replies,
                 "id": p.id,
-                "image": p.image.url,
             }
-
+            if not(p.image is None):
+                parent_content["image"] = p.image,
             replies = []
             reply = Posts.objects.filter(parent=p.id).order_by("id").values()
             for r in reply:

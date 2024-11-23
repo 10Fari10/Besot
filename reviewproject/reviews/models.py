@@ -18,7 +18,7 @@ class Posts(models.Model):
     likes = models.IntegerField(default=0)
     parent = models.CharField(max_length=255,null=True)
     replies = models.IntegerField(null=True)
-    image = models.ImageField(upload_to='posts/')
+    image = models.CharField(max_length=255,null=True)
 
 
 class Likes(models.Model):

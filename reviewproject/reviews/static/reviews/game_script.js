@@ -1,6 +1,6 @@
 const roomName = JSON.parse(document.getElementById('room-name').textContent);
 const layout = JSON.parse(document.getElementById('map_layout').textContent);
-const game_socket = new WebSocket('ws://' + window.location.host+ '/ws/game/'+ roomName+ '/');
+const game_socket = new WebSocket('wss://' + window.location.host+ '/ws/game/'+ roomName+ '/');
 
 
 
