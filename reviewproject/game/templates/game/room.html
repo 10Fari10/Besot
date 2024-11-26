@@ -12,7 +12,7 @@
 </head>
 <body>
     <!--Redirect to homepage-->
-    <div class="back_button">&larr;</div>
+    <div class="back_button"><a href="/game/">&larr;</a></div>
     <br>
     <!--Lobby ID-->
     <div class="info_box">Lobby #</div><br>
@@ -20,13 +20,19 @@
     <input type="text" id="test"><br>
     <!--Time is here-->
     <div class="info_box">Time
-        <p class="time">
+        <p id="tim_box" class="time">
             <span id="minutes">00</span>:<span id="seconds">00</span>:<span id="tens">00</span>
         </p>
     </div><br>
 
     <!--Leaderboard info is displayed here-->
-    <div class="leader_board">Lead</div>
+    <div class="leader_board">
+        <h2>LeaderBoard </h2>
+        <div id="user_leaders">
+
+        </div>
+
+    </div>
     <!--Game is in this container-->
     <div class="game_container"> 
         <div id="map" style="width:100%; height:400px;"></div>
@@ -37,7 +43,7 @@
     <div id="pin-bar" class="pin_bar">Your Path: (Select pins to build your sequence)</div><br>
   
     <!--Reset Button-->
-    <button class="button" type="Reset"></button>
+    <button class="button" id="reset-button" type="button">Reset</button>
     
 
 <input id="submit" type="Submit"  class="sub_button" > 

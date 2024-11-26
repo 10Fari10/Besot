@@ -15,6 +15,45 @@ logging.basicConfig(format=fmt, level=lvl)
 logging.debug("Logging started on %s for %s" % (logging.root.name, logging.getLevelName(lvl)))
 
 def index(request):
+    username = request.user.username
+    if UserData.objects.filter(username=username).exists():
+        user_data = UserData.objects.filter(username=username).first()
+        if user_data:
+            time_user = user_data.time
+            m = time_user // 600
+            s = (time_user % 600) // 10
+            c = time_user % 10
+            m = str(m)
+            s = str(s)
+            c = str(c)
+            if len(m) == 1:
+                m = "0" + m
+            if len(s) == 1:
+                s = "0" + s
+            if len(c) == 1:
+                c = "0" + c
+            time_final = m + ":" + s + ":" + c
+            user_data_list = UserData.objects.all().order_by('time')[:10]
+
+            leaderboard = []
+            for u in user_data_list:
+
+                time_con = u.time
+                m = time_con // 600
+                s = (time_con % 600) // 10
+                c = time_con % 10
+                m = str(m)
+                s = str(s)
+                c = str(c)
+                if len(m) == 1:
+                    m = "0" + m
+                if len(s) == 1:
+                    s = "0" + s
+                if len(c) == 1:
+                    c = "0" + c
+                t_final = m + ":" + s + ":" + c
+                leaderboard.append((u.username, t_final))
+        return render(request, "game/completed_screen.html", {'time': time_final, 'leaderboard': leaderboard})
     return render(request, "game/index.html")
 
 #Changed my mind
@@ -56,18 +95,55 @@ def room(request, room_name):
              
              return render(request, "game/room.html", {'map_layout': map_layout, 'room_name': room_name})
 
-def getLeaderboards(request):
-    if not request.user.is_authenticated:
-        return HttpResponse('Unauthorized', status=401)
-    users = UserData.objects.filter(time__isnull=False).order_by('time')[:10]
-    if len(users) < 10:
-        users = UserData.objects.filter(time__isnull=False).order_by('time')
-    if len(users) >0:
-        return render(request, "game/room.html", {'leaderboard': users})
-    else:
-        return render(request, "game/index.html", {'message': 'No users found'})
-
-
+# def getLeaderboards(request):
+#     if not request.user.is_authenticated:
+#         return HttpResponse('Unauthorized', status=401)
+#     users = UserData.objects.filter(time__isnull=False).order_by('time')[:10]
+#     if len(users) < 10:
+#         users = UserData.objects.filter(time__isnull=False).order_by('time')
+#     if len(users) >0:
+#         return render(request, "game/room.html", {'leaderboard': users})
+#     else:
+#         return render(request, "game/index.html", {'message': 'No users found'})
+#
+#
 
 def completed_screen(request):
-    return render(request, "game/completed_screen.html")
+    username = request.user.username
+    user_data = UserData.objects.filter(username=username).first()
+    if user_data:
+        time_user = user_data.time
+        m = time_user // 600
+        s = (time_user % 600) // 10
+        c = time_user % 10
+        m = str(m)
+        s = str(s)
+        c = str(c)
+        if len(m) == 1:
+            m = "0" + m
+        if len(s) == 1:
+            s = "0" + s
+        if len(c) == 1:
+            c = "0" + c
+        time_final = m + ":" + s + ":" + c
+        user_data_list = UserData.objects.all().order_by('time')[:10]
+
+        leaderboard = []
+        for u in user_data_list:
+
+            time_con = u.time
+            m = time_con // 600
+            s = (time_con % 600) // 10
+            c = time_con % 10
+            m = str(m)
+            s = str(s)
+            c = str(c)
+            if len(m) == 1:
+                m = "0" + m
+            if len(s) == 1:
+                s = "0" + s
+            if len(c) == 1:
+                c = "0" + c
+            t_final = m + ":" + s + ":" + c
+            leaderboard.append((u.username, t_final))
+    return render(request, "game/completed_screen.html", {'time': time_final,'leaderboard': leaderboard})

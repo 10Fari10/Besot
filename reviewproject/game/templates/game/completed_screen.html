@@ -8,9 +8,20 @@
     </head>
     <body style="text-align: center;">
       <h1 style="color:white;">You Won!</h1>
-      <p style="color:white;">You finished at {Time}</p>
+      <p style="color:white;">You finished at {{ time }}</p>
       <br>
-      <button class="redirect">Go Home</button>
-    
+<!--      <button class="redirect">Go Home</button>-->
+      <a href="/" class="redirect">Go Home</a>
+    <div class="leaderboard">
+            <h2 style="color:white;">Leaderboard</h2>
+            {% for user, time in leaderboard %}
+                <div class="leaderboard-entry">
+                    <div style="color:white;">{{ forloop.counter }}.    {{ user }}  :   {{ time }}</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <br>
+
     </body>
 </html>

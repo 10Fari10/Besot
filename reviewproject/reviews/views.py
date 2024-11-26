@@ -10,6 +10,7 @@ from reviews.models import *
 from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_protect
+
 import html
 from PIL import Image
 import filetype
