@@ -32,7 +32,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
-ALLOWED_HOSTS = ["localhost",'web']
+ALLOWED_HOSTS = ["localhost",'web',"137.184.156.82","billsoftrails.com"]
 
 
 # Application definition
