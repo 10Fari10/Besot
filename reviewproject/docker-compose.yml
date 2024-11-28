@@ -1,4 +1,9 @@
 services:
+  # certbot:
+  #   image: certbot/certbot:latest
+  #   volumes:
+  #     - ./certbot/www/:/var/www/certbot/
+  #     - ./certbot/conf/:/etc/letsencrypt/
   nginx:
     build: ./nginx
     ports: 
@@ -9,6 +14,7 @@ services:
     volumes:
     - media_volume:/home/app/web/media
     - static_volume:/home/app/web/static_files
+    restart: always
   redis:
     image: redis:6.2-alpine
     restart: always
@@ -18,6 +24,7 @@ services:
       POSTGRES_DB: sqlcse312
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+    restart: always
   web:
     build: .
     environment:
@@ -35,7 +42,12 @@ services:
     volumes:
     - media_volume:/home/app/web/media
     - static_volume:/home/app/web/static_files
+    # - ./certbot/www:/var/www/certbot/
+    # - ./nginx/conf/:/etc/nginx/conf.d/
+    restart: always
 volumes:
   static_volume:
   media_volume:
-    
+  ./certbot/www/:
+  # ./nginx/conf/:
+  # ./certbot/conf/:
