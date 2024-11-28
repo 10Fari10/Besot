@@ -158,4 +158,4 @@ CHANNEL_LAYERS = {
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
-CSRF_TRUSTED_ORIGINS = ['https://localhost']
+CSRF_TRUSTED_ORIGINS = ['https://localhost',"https://billsoftrails.com"]
