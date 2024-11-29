@@ -4,61 +4,9 @@
   function popDown(){
   document.getElementById("addPost").style.display="none";
   }
-//opens profile pic form
-  document.getElementById("user_pfp").addEventListener("click", pfp_up);
-  function pfp_up(){
-  document.getElementById("user_form").style.display="block";
-  }
-//closes profile pic form
-  document.getElementById("close_user_pfp").addEventListener("click", pfp_down);
-  function pfp_down(){
-  document.getElementById("user_form").style.display="none";
-  }
 
 
-//submission for profile pic form
-  document.getElementById('user_pfp').addEventListener('submit', pfp_submission);
-  async function pfp_submission(event) {
-    event.preventDefault();
-    const pfp = document.getElementById("pfp_Val").value;
-    if(pfp==''){
-        alert("Please choose a file.");
-    }
-    else{
-    const data_to_send = {
-        Profile: pfp,
-        parent:-1,
-    };
-    try {
-        const response = await fetch('pfp_post', {
-            method: 'POST',
-            headers: {
-                //We can make profile madatory png or jpg or make it flexible up to you
-                'Content-Type': 'image/png',
-                'X-CSRFToken': CSRF_TOKEN
-            },
-            body: data_to_send
-        });
 
-        if (response.ok) {
-            sent_data = await response.json();
-            console.log("OK!:", sent_data);
-            //function might be needed here
-            document.getElementById("picVal").value = '';
-
-            pfp_down();
-        }
-        else{
-            alert("Failed to insert image.");
-            pfp_down();
-        }
-    } catch (error) {
-        console.error("ERROR:", error);
-        alert("An error occurred while submitting your profile image.");
-    }
-}
-}
-//function to actually load the pfp needs to be written
 
   //submission function-once form is completed with all fields entered with a value (not empty else different alert will appear)
   //once check field are filled will empty values and automatically close
@@ -174,9 +122,7 @@ function displayReviews(allPosts) {
         const postElement = document.createElement("div");
         postElement.classList.add("pinform");
 
-        const Elem_pfp=document.createElement("div");
-        Elem_pfp.classList.add("pfp");
-        postElement.appendChild(Elem_pfp);
+        
 
         const Elem_user = document.createElement("p");
         Elem_user.textContent = `Reviewed by : ${post.username}`;

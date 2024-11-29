@@ -33,13 +33,13 @@ hr{
 }
 .box{
   width: 90%;
-  height: 170px;
+  height: 185px;
   border-color: white;
   border-style: solid;
   color:white;
   border-radius: 2.5px;
-  font-family: "Abril Fatface", serif;
-  font-size: 25px;
+  font-family: "Montserrat", serif;
+  font-size: 24px;
   
   text-align: center;
   margin-left: auto;
@@ -66,15 +66,7 @@ hr{
   height: 50px;
   border-radius: 50%;
 }
-.pfp{
-  background-image:  url("{% static 'reviews\images\user.png' %}");
-  background-size: cover;
-  border-style: solid;
-  border-color: black;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-}
+
 .popoverlay{
   display: none;
   position: fixed;
@@ -105,7 +97,7 @@ hr{
   position: absolute;
   background-color:#00338d;
   color:white;
-  font-family: "Abril Fatface", serif;
+  font-family: "Montserrat", serif;
   border-style:solid;
   border-color:#00338d;
   right:5.5%;
@@ -114,7 +106,7 @@ hr{
   position: absolute;
   background-color:#C60C30;
   color:white;
-  font-family: "Abril Fatface", serif;
+  font-family: "Montserrat", serif;
   border-style:solid;
   border-color:#C60C30;
   right:1%;
@@ -126,7 +118,7 @@ hr{
   background-color: black;
   border-color: white;
   border-style: solid;
-  font-family: "Abril Fatface", serif;
+  font-family: "Montserrat", serif;
   color:white;
   font-size: 20px;
   font-weight: bold;
@@ -141,7 +133,7 @@ hr{
   background-color: black;
   border-color: white;
   border-style: solid;
-  font-family: "Abril Fatface", serif;
+  font-family: "Montserrat", serif;
   color:white;
 }
 .sibutton{
@@ -152,7 +144,7 @@ hr{
   border-style: solid;
   position: absolute;
   left:15%;
-  font-family: "Abril Fatface", serif;
+  font-family: "Montserrat", serif;
   color:white;
 }
 .pinput{
@@ -162,7 +154,7 @@ hr{
   background-color: black;
   border-color: white;
   border-style: solid;
-  font-family: "Abril Fatface", serif;
+  font-family: "Montserrat", serif;
   left:10%;
   color:white;
 }
@@ -174,7 +166,7 @@ hr{
   border-style: solid;
   position: absolute;
   left:30%;
-  font-family: "Abril Fatface", serif;
+  font-family: "Montserrat", serif;
   color:white;
 }
 .hue{
@@ -235,7 +227,7 @@ left:25%;
   position: absolute;
   background-color: #00338d;
   color: white;
-  font-family: "Abril Fatface", serif;
+  font-family: "Montserrat", serif;
   border-style: solid;
   border-color: #00338d;
   right: 1%;      
@@ -249,7 +241,7 @@ left:25%;
   /*background-color:#2CABF6;*/
   background-color:darkviolet;
   color:white;
-  font-family: "Abril Fatface", serif;
+  font-family: "Montserrat", serif;
   border-style:solid;
   /*border-color:#1B03A3;*/
   border-color: darkviolet;

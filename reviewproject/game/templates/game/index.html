@@ -1,26 +1,29 @@
 <!-- chat/templates/chat/index.html -->
+{% load static %}
 <!DOCTYPE html>
 <html>
+    <link rel="stylesheet" href="{% static 'reviews/index.css' %}">
 <head>
     <meta charset="utf-8"/>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lancelot&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poiret+One&display=swap" rel="stylesheet">
     <title>Rooms</title>
 </head>
 <body>
-    <input id="room-name-submit-alpha" type="button" value="Room Alpha"><br>
-    <input id="room-name-submit-bravo" type="button" value="Room Bravo"><br>
-    <input id="room-name-submit-charlie" type="button" value="Room Charlie"><br>
+    <div class="back_button"><a href="/">&larr;</a></div><br>
+    <h1><b>Welcome to the Bills of Trails game!</b></h1><br>
+    <p><u>How to play</u>
+        <br>1.Start the path on the -color- pin<br><br>
+    2.Use the clues on each pin to correctly guess the next pin, you may hit the reset button if you want to reset your path.<br><br>
+3.Once you're done hit submit, if your correct your time gets recorded and put on the leaderboard. If you are wrong you can try again!
+<br><br>Good Luck and have fun!</p>
+    <br>
+    <br>
+    <input class="sub_button" id="room-name-submit-alpha" type="button" value="Start Game!"><br>
+    
 
     <script>
         document.querySelector('#room-name-submit-alpha').onclick = function(e) {
             var roomName = "alpha";
-            window.location.pathname = '/game/' + roomName + '/';
-        };
-        document.querySelector('#room-name-submit-bravo').onclick = function(e) {
-            var roomName = "bravo";
-            window.location.pathname = '/game/' + roomName + '/';
-        };
-        document.querySelector('#room-name-submit-charlie').onclick = function(e) {
-            var roomName = "charlie";
             window.location.pathname = '/game/' + roomName + '/';
         };
     </script>

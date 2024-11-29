@@ -3,8 +3,7 @@
 <html>
     <link rel="stylesheet" href="{% static 'reviews/style.css' %}">
     <link rel="stylesheet" href="{% static 'reviews/leaflet.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lancelot&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poiret+One&display=swap" rel="stylesheet">
 <!--map api set up-->
 <head>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
@@ -12,23 +11,11 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
     <body>
+        <div id="bonus"></div>
    <!--log-in and sign in buttons-->
    {% if user.is_authenticated %}
     <a class="logbutton" href="{% url 'logout' %}">Logout</a>
    <div class="welcome_user_container">
-        <!--pfp container-->
-        <div class="circle" id="user_pfp" onclick="pfp_up()"> </div>
-        <!--Change pfp form-->
-        <form id="user_form" class="u_form">
-            <!-- Close Button -->
-           <button  type="button" class="x" id="close_user_pfp" onclick="pfp_down()">&times;</button><br><hr><br>
-           <!-- pfp upload -->
-           <input type="file" id="pfp_Val" class="pbutton"><br><hr><br><hr>
-           <!--Submit button-->
-           <input type="submit" class="pbutton" value="Submit" onclick="pfp_submission(event)"><br><hr><br><hr>
-           </form>
-
-
        <h2 class="welcome_user"> {{ user.username }} </h2>
    </div>
    {% else %}
@@ -37,7 +24,7 @@
    <a class="logbutton" href="{% url 'register_user' %}">Register</a>
    {% endif %}
    <p>tst</p>
-   <a class="logbutton" href="/game/">Game</a>
+   <a class="signbutton" href="/game/">Game</a>
 <div class="logbox" id="logging">
     <form><hr><hr><hr>
         <!--close button-->
@@ -74,7 +61,7 @@
     </div><br><hr>
 
 <!--introduction-->
-<div class="box">Welcome! From the most authentic pizzerias to the lushest local parks, all locations in the 716 area are open to review.<br>To make a review:<br>1. Click the button on the bottom right<br>2. Add your review and a picture<br>3. Click submit</div>
+<div class="box">Welcome! From the most authentic pizzerias to the lushest local parks, all locations in the 716 area are open to review.<br>To make a review:<br>1. Click on the place you want tp review on the map<br>2. Complete the review form and hit submit! <br>3. To see your pin or others hit any pin and click "View Reviews"</div>
 <!--post container,map should be here-->
 <br><br><div class="bodcontainer"><hr>
     <div id="map" style="height: 500px; width: 100%;"></div>
@@ -94,7 +81,7 @@
      <form id="reviewForm" enctype="multipart/form-data" method="POST">
         
         <!-- OPEN: Please center properly -->
-        <p class ="file_remind">JPEG and PNG files only</p>
+        <p class ="file_remind">JPEG and PNG files only (Optional)</p>
         <!-- CSRF Token -->
         {% csrf_token %}
         <!-- Close Button -->
