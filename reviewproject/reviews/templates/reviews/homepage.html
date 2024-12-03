@@ -41,9 +41,9 @@
 <!--bonus feature form-->
 <div class="timerpop" id="addLoco">   
     <form id="timeform">
-           <p>How many minutes would you like to share your location?</p>
-           <input class="slider" type="range" id="time" name="Hour" min="1" max="60"> <span id="val"></span><br><br>
-      <input type="submit" class="tbutton" value="Submit">
+           <p class="para">How many minutes would you like to share your location?</p>
+           <input class="slider" type="range" id="time" name="Hour" min="1" max="60" value="1"> <span id="val"></span><br><br>
+      <input type="submit" class="tbutton" value="Submit" onclick="t_submit(event)">
       <br><br><br>
             <input type="reset" class="tbutton" value="Reset" />
         </form>
@@ -73,7 +73,7 @@
     </div><br><hr>
 
 <!--introduction-->
-<div class="box">Welcome! From the most authentic pizzerias to the lushest local parks, all locations in the 716 area are open to review.<br>To make a review:<br>1. Click on the place you want tp review on the map<br>2. Complete the review form and hit submit! <br>3. To see your pin or others hit any pin and click "View Reviews"</div>
+<div class="box">Welcome to Bills of Trails! Explore and review area all over Buffalo, home of the Buffalo Bills!<br>To make a review:<br>1. Click on the place you want tp review on the map<br>2. Complete the review form and hit submit! <br>3. To see your pin or others hit any pin and click "View Reviews"</div>
 <!--post container,map should be here-->
 <br><br><div class="bodcontainer"><hr>
     <div id="map" style="height: 500px; width: 100%;"></div>
