@@ -38,6 +38,18 @@
     </form>
 </div>
 
+<!--bonus feature form-->
+<div class="timerpop" id="addLoco">   
+    <form id="timeform">
+           <p>How many hours would you like to share your location?</p>
+           <input class="slider" type="range" id="time" name="Hour" min="1" max="24"> <span id="val"></span><br><br>
+      <input type="submit" class="tbutton" value="Submit">
+      <br><br><br>
+            <input type="reset" class="tbutton" value="Reset" />
+        </form>
+</div>
+
+
 <!--sign in form-->
 <div class="logbox" id="signing">
     <form action ="/test/" method="post"> {% csrf_token %}
@@ -108,7 +120,7 @@
         <script src="{% static 'reviews/scripts.js' %}"></script>
         <script src="{% static 'reviews/leaflet.js' %}"></script>
         <script src ="{% static 'reviews/map.js' %}"></script>
-
+        <script src ="{% static 'reviews/bonusFeature.js' %}"></script>
         <script> var CSRF_TOKEN = '{{ csrf_token }}';</script>
     </body>
 </html>

@@ -1,6 +1,61 @@
 body{
   background-color: black;
 }
+
+p{
+  font-family: "Montserrat", serif;
+  color:white;
+}
+.timerpop{
+  display: none;
+  border:solid;
+  border-color:white;
+  text-align:center;
+  font-family: "Montserrat", serif;
+  color:white;
+  position: fixed;
+  top: 10%;
+  left: 25%;
+  background-color: black;
+  border-color: white;
+  border-style: solid;
+  width:800px;
+  height:65%;
+  z-index: 10000;
+}
+
+.tbutton{
+  height:40px;
+  width:150px;
+  background-color: black;
+  border-color: white;
+  border-style: solid;
+  position: absolute;
+  left:40%;
+  font-family: "Montserrat", serif;
+  color:white;
+}
+
+.slider {
+    appearance: none;
+    width: 450px; 
+    height: 15px; 
+    background: white ; 
+    border-radius:10px;
+}
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px; 
+  height: 20px; 
+  border-radius: 50%; 
+  background: black; 
+  border-color:white;
+  border-style:solid;
+}
+
+
+
+
 .bodcontainer{
   width:98%;
   height:100%;
