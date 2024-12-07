@@ -34,7 +34,8 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 
 ALLOWED_HOSTS = ["localhost",'web',"137.184.156.82","billsoftrails.com"]
 
-
+RATELIMIT_KEY = 'ip'  
+RATELIMIT_RATE = '50/m'
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,15 +49,18 @@ INSTALLED_APPS = [
     'reviews',
     'users',
     'game',
+    'django_ratelimit',
     
 ]
 
 MIDDLEWARE = [
+    # Other middleware
+    'django_ratelimit.middleware.RatelimitMiddleware',
+    'django.middleware.common.CommonMiddleware',  # Comes before RatelimitMiddleware  # Ensure rate-limiting comes after CommonMiddleware
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Should be after rate-limiting
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -159,3 +163,14 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
 CSRF_TRUSTED_ORIGINS = ['https://localhost',"https://billsoftrails.com"]
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/1',  # Use the container name here
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+RATELIMIT_USE_CACHE = 'default'

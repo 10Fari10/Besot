@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from game.models import *
 import json
 import time
+from django_ratelimit.decorators import ratelimit
 
 import logging
 from django.conf import settings
@@ -14,6 +15,8 @@ lvl = getattr(settings, 'LOG_LEVEL', logging.DEBUG)
 logging.basicConfig(format=fmt, level=lvl)
 logging.debug("Logging started on %s for %s" % (logging.root.name, logging.getLevelName(lvl)))
 
+
+@ratelimit(key='ip', rate='50/10s', method='ALL', block=True)
 def index(request):
     username = request.user.username
     if UserData.objects.filter(username=username).exists():
@@ -71,6 +74,7 @@ def index(request):
 # -78.81184178541595 map.js:29:25
 # 42.995545116259315 map.js:28:25
 # -78.77999717562783
+@ratelimit(key='ip', rate='50/10s', method='ALL', block=True)
 def room(request, room_name):
     mapSolutions = {"alpha":"r1,r2,r3,r4"}
     mapLayouts = {
@@ -107,7 +111,7 @@ def room(request, room_name):
 #         return render(request, "game/index.html", {'message': 'No users found'})
 #
 #
-
+@ratelimit(key='ip', rate='50/10s', method='ALL', block=True)
 def completed_screen(request):
     username = request.user.username
     user_data = UserData.objects.filter(username=username).first()
@@ -147,3 +151,5 @@ def completed_screen(request):
             t_final = m + ":" + s + ":" + c
             leaderboard.append((u.username, t_final))
     return render(request, "game/completed_screen.html", {'time': time_final,'leaderboard': leaderboard})
+
+

@@ -2,10 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django_ratelimit.decorators import ratelimit
 
 # Create your views here.
 
-
+@ratelimit(key='ip', rate='50/10s', method='ALL', block=True)
 def login_user(request):
     if request.method == 'POST':
         # username = request.POST["username"]
@@ -23,12 +24,13 @@ def login_user(request):
         form = AuthenticationForm()
     return render(request, 'authentication/login_user.html', {"form":form})
 
-
+@ratelimit(key='ip', rate='50/10s', method='ALL', block=True)
 def logout_user(request):
     logout(request)
     messages.success(request, "You were logged out")
     return redirect('main_homepage')
 
+@ratelimit(key='ip', rate='50/10s', method='ALL', block=True)
 def register_user(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)

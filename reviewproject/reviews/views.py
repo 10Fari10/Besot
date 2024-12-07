@@ -1,4 +1,5 @@
 import base64
+from venv import logger
 
 from django.shortcuts import render, redirect
 import json
@@ -6,10 +7,12 @@ from django.core.files.base import ContentFile
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import loader
+import redis
 from reviews.models import *
 from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_protect
+from django_ratelimit.decorators import ratelimit
 
 import html
 from PIL import Image
@@ -28,14 +31,16 @@ lvl = getattr(settings, 'LOG_LEVEL', logging.DEBUG)
 logging.basicConfig(format=fmt, level=lvl)
 logging.debug("Logging started on %s for %s" % (logging.root.name, logging.getLevelName(lvl)))
 
-
+@ratelimit(key='ip', rate='5/s', method='ALL', block=False)
 def main_homepage(request):
-    # context = {'form': PostForm()}
+   
+    
+       
     return render(request, 'reviews/homepage.html')
-    # return render(request, 'reviews/homepage.html')
 
 
 # Gets Profile pic
+@ratelimit(key='ip', rate='5/s', method='ALL', block=False)
 @csrf_protect
 def loadpfp(request):
     if request.method == 'GET':
@@ -44,6 +49,7 @@ def loadpfp(request):
 
 
 # Post Profile pic
+@ratelimit(key='ip', rate='5/s', method='ALL', block=False)
 @csrf_protect
 def postpfp(request):
     if request.method == 'POST':
@@ -53,6 +59,7 @@ def postpfp(request):
 
 @csrf_protect
 # Receives post requests from users posting and replying
+@ratelimit(key='ip', rate='5/s', method='ALL', block=False)
 def postHandle(request):
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'Please Login First'}, status=401)
@@ -112,6 +119,7 @@ def postHandle(request):
 
 @csrf_protect
 # Receives post requests from users liking
+@ratelimit(key='ip', rate='5/s', method='ALL', block=False)
 def likeHandle(request):
     if request.method == "POST":
         req_body = request.body.decode()
@@ -138,6 +146,7 @@ def likeHandle(request):
 @csrf_protect
 # Receives get requests and sends posts from specified location to front end
 # Make a post on front end. Send post data to backend. Backend saves to pins database. Sends list of pin back. Front end renders all pins. When pin is clicked, sends request to backed. Backends sends all post data.
+@ratelimit(key='ip', rate='5/s', method='ALL', block=False)
 def sendPost(request):
     lat = float(request.GET.get("lat"))
     long = float(request.GET.get("long"))
@@ -173,7 +182,7 @@ def sendPost(request):
 
     return JsonResponse(allPosts, safe=False)
 
-
+@ratelimit(key='ip', rate='5/s', method='ALL', block=False)
 @csrf_protect
 def sendPins(request):
     if request.method == "GET":
@@ -183,3 +192,8 @@ def sendPins(request):
 
 
 
+@ratelimit(key='ip', rate='5/s', method='ALL', block=False)
+def my_view(request):
+    if getattr(request, 'limited', False):
+        return JsonResponse({"error": "Too many requests. Please try again later."}, status=429)
+    # normal view code
