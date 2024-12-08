@@ -2,20 +2,16 @@ import base64
 
 from django.shortcuts import render, redirect
 import json
-from django.core.files.base import ContentFile
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
-from django.template import loader
 from reviews.models import *
 from django.http import JsonResponse
-from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_protect
 
 import html
 from PIL import Image
-import filetype
+
+from datetime import timezone,timedelta,datetime
+
 import magic
-import tempfile
 import io
 import os
 
@@ -50,7 +46,8 @@ def postpfp(request):
         username = request.user.get_username()
         pass
 
-
+# expire_date = datetime.datetime.now() + datetime.timedelta(minutes=30)
+#         expire_str = expire_date.strftime("%a, %d %b %Y %H:%M:%S GMT")
 @csrf_protect
 # Receives post requests from users posting and replying
 def postHandle(request):
@@ -67,9 +64,16 @@ def postHandle(request):
         parent = req_body.get("parent", -1)
         likes = req_body.get("likes", 0)
         replies = req_body.get("replies", 0)
+        time = int(req_body.get("time"))
+        expire_date=None
+        if(time !=-1):
+            expire_date = datetime.now(timezone.utc) + timedelta(minutes=time)
 
         print(f"Creating pin at Latitude: {lat}, Longitude: {long}")
-        pin = Pins(lat=lat, long=long)
+        logging.debug("expire")
+        logging.debug(time)
+        logging.debug(expire_date)
+        pin = Pins(lat=lat, long=long,expire=expire_date)
         pin.save()
         username = request.user.get_username()
         post = Posts(username=username, lat=lat, long=long, parent=parent, likes=likes, replies=replies, body=body)
@@ -177,9 +181,21 @@ def sendPost(request):
 @csrf_protect
 def sendPins(request):
     if request.method == "GET":
-        pins = list(Pins.objects.values("lat", "long"))
+        pins = list(Pins.objects.values("lat", "long","expire"))
+        for p in pins:
+            logging.debug(p)
+            if ("expire" in p):
+                if(p["expire"]!=None):
+                    logging.debug(p["expire"])
+                    if p["expire"]<datetime.now(timezone.utc):
+                        event = Pins.objects.get(lat=p["lat"],long=p["long"])
+                        event.delete()
+        pins = list(Pins.objects.values("lat", "long"))        
+
         return JsonResponse({"pins": pins}, status=200)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
+
+
 
 
 

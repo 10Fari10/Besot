@@ -5,27 +5,16 @@
   document.getElementById("addPost").style.display="none";
   }
 
-
-
-
-  //submission function-once form is completed with all fields entered with a value (not empty else different alert will appear)
-  //once check field are filled will empty values and automatically close
-
-//
   document.getElementById('reviewForm').addEventListener('submit', submission);
 
   async function submission(event) {
     event.preventDefault();
-    // const form = document.getElementById('reviewForm');
     const lat = document.getElementById("latVal").value;
     const long = document.getElementById("longVal").value;
+    const time = document.getElementById("timeToSend").value;
     const review_text = document.getElementById("revVal").value;
     const img = document.getElementById("picVal");
 
-    // if (img.files.length === 0) {
-    //     alert("Please select a file.");
-    //     return;
-    // }
     if(review_text ==''){
         alert("Please enter review.")
     } else{
@@ -35,21 +24,21 @@
         review: review_text,
         replies: 0,
         parent: -1,
+        time:time,
     };
     const file = img.files[0];
     if (img.files.length !== 0){
     const reader = new FileReader();
     reader.onload = async function(e) {
         const bytes = e.target.result.split(',')[1]; // Base64 without metadata
-        console.log(bytes);
-        console.log(file.name);
-        console.log("tead1");
         data_to_send.img = bytes;
         data_to_send.img_name = file.name;
         send(data_to_send);
     } 
     reader.readAsDataURL(file);
         }else{
+        console.log("here")
+        console.log(data_to_send.time)
         send(data_to_send);
     }
     }
@@ -74,6 +63,7 @@ async function send(data_to_send) {
             document.getElementById("latVal").value = '';
             document.getElementById("longVal").value = '';
             document.getElementById("revVal").value = '';
+            document.getElementById("timeToSend").value = '-1';
             popDown();
         } else {
             alert("Failed to create post.");

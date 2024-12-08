@@ -159,3 +159,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
 
 CSRF_TRUSTED_ORIGINS = ['https://localhost',"https://billsoftrails.com"]
+TIME_ZONE = 'America/New_York'
+USE_TZ = True

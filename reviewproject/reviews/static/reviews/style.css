@@ -132,7 +132,7 @@ hr{
   border-style: solid;
   width:800px;
   height:500px;
-  z-index: 10000;
+  z-index: 9999;
 }
 .logbox{
   position: fixed;

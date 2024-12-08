@@ -96,9 +96,7 @@
         <p class ="file_remind">JPEG and PNG files only (Optional)</p>
         <!-- CSRF Token -->
         {% csrf_token %}
-        <!-- Close Button -->
-<!--        <button onclick="popDown()" type="button" class="x" id="closePop">&times;</button><br><hr><br>-->
-        <!-- Media Upload Field for now omit for potentially project prt2 -->
+ 
         <input type="file" id="picVal" class="pbutton" default=""><br><hr><br><hr>
 
         <!-- Review Field -->
@@ -107,12 +105,11 @@
         <input type="hidden" id="latVal" name="lat" value="">
         <input type="hidden" id="longVal" name="long" value="">
         <!-- Submit Button -->
+
+         <button type = "button" id = "event" onclick = "timePopUp()" > Event Pin </button>
+         <input type="hidden" id="timeToSend" value="-1">
         <input type="submit" class="pbutton" value="Submit" onclick="submission(event)"><br><hr><br><hr>
-<!--        <input type="submit" class="pbutton" value="Submit" /><br><hr><br><hr>-->
-        <!-- Reset Button -->
-
-
-<!--     <input type="submit" class="pbutton" value="Submit"><br><hr><br><hr>-->
+        
         <input type="reset" class="pbutton" value="Reset" />
     </form>
 
