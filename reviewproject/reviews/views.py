@@ -77,10 +77,13 @@ def postHandle(request):
             pin.save()
         else:
             pin = Pins.objects.get(lat=lat,long=long)
-            if (pin.expire !=None and expire_date!=None):
-                if(pin.expire < expire_date):
+            if (expire_date!=None):
+                if (pin.expire !=None): 
+                    if(pin.expire < expire_date):
+                        pin.expire = expire_date
+                else:
                     pin.expire = expire_date
-                    pin.save()
+                pin.save()
             
         username = request.user.get_username()
         post = Posts(username=username, lat=lat, long=long, parent=parent, likes=likes, replies=replies, body=body,expire=expire_date)
