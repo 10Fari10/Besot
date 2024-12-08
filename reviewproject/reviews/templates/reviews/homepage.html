@@ -7,7 +7,6 @@
 <!--map api set up-->
 <head>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <scirpt src="https://cdn.tailwindcss.com"></scirpt>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
     <body>
@@ -106,7 +105,7 @@
         <input type="hidden" id="longVal" name="long" value="">
         <!-- Submit Button -->
 
-         <button type = "button" id = "event" onclick = "timePopUp()" > Event Pin </button>
+         <button type = "button" id = "event" class = "pbutton " onclick = "timePopUp()" > Event Pin </button> <br><hr><br><hr>
          <input type="hidden" id="timeToSend" value="-1">
         <input type="submit" class="pbutton" value="Submit" onclick="submission(event)"><br><hr><br><hr>
         

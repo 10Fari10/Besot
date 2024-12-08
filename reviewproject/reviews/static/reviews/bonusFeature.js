@@ -1,12 +1,16 @@
 const holder=[];
-function getLocation() {
+async function getLocation() {
   if (navigator.geolocation) {
+    console.log("YESLOCO");
     navigator.geolocation.getCurrentPosition(store_n_pop);
+  } else{
+    console.log("NOLOCO");
   }
 }
 
 function store_n_pop(point) { 
   holder.push(point.coords.latitude,point.coords.longitude);
+  document.getElementById("addLoco").style.display="block";
 }
 
 var change=document.getElementById("val");
@@ -15,24 +19,26 @@ var t_range=document.getElementById("time").oninput=function(){
 }
 document.getElementById('timeform').addEventListener('submit', t_submit);
 
+
+
 async function t_submit(event) {
-event.preventDefault();
-if(holder.length==0 || holder.length==1){
-  console.log(holder)
-alert("Error no location found");
+  event.preventDefault();
+  if(holder.length==0 || holder.length==1){
+    console.log(holder);
+    alert("Error no location found");
 
-}
-else{
-  const lat =holder[0];
-  const long = holder[1];
-  const time=document.getElementById("time").value;
-  
-  document.getElementById("timeToSend").value = time
-  document.getElementById("latVal").value = lat
-  document.getElementById("longVal").value = long
+  }
+  else{
+    const lat =holder[0];
+    const long = holder[1];
+    const time=document.getElementById("time").value;
+    
+    document.getElementById("timeToSend").value = time
+    document.getElementById("latVal").value = lat
+    document.getElementById("longVal").value = long
 
-}
-timePopDown()
+  }
+  timePopDown()
 }
 
 function timePopDown(){
@@ -40,7 +46,6 @@ function timePopDown(){
   }
 
 function timePopUp(){
-  document.getElementById("addLoco").style.display="block";
+  getLocation();
   }
 
-getLocation();

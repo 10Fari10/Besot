@@ -20,6 +20,8 @@ class Posts(models.Model):
     parent = models.CharField(max_length=255,null=True)
     replies = models.IntegerField(null=True)
     image = models.CharField(max_length=255,null=True)
+    expire = models.DateTimeField(auto_now=False, auto_now_add=False,null=True)
+
     
 
 

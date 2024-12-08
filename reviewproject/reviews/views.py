@@ -58,25 +58,32 @@ def postHandle(request):
         file_types = {"image/png":".png","image/jpeg":".jpg"}
         req_body = json.loads(request.body.decode())
         
-        lat = float(req_body["latVal"])
-        long = float(req_body["longVal"])
+        lat = round(float(req_body["latVal"]),3)
+        long = round(float(req_body["longVal"]),3)
         body = req_body.get("review", "")
         parent = req_body.get("parent", -1)
         likes = req_body.get("likes", 0)
         replies = req_body.get("replies", 0)
         time = int(req_body.get("time"))
         expire_date=None
-        if(time !=-1):
+
+        if(time > 0 and time <=60):
             expire_date = datetime.now(timezone.utc) + timedelta(minutes=time)
 
         print(f"Creating pin at Latitude: {lat}, Longitude: {long}")
-        logging.debug("expire")
-        logging.debug(time)
-        logging.debug(expire_date)
-        pin = Pins(lat=lat, long=long,expire=expire_date)
-        pin.save()
+
+        if(Pins.objects.filter(lat=lat,long=long).count() == 0):
+            pin = Pins(lat=lat, long=long,expire=expire_date)
+            pin.save()
+        else:
+            pin = Pins.objects.get(lat=lat,long=long)
+            if (pin.expire !=None and expire_date!=None):
+                if(pin.expire < expire_date):
+                    pin.expire = expire_date
+                    pin.save()
+            
         username = request.user.get_username()
-        post = Posts(username=username, lat=lat, long=long, parent=parent, likes=likes, replies=replies, body=body)
+        post = Posts(username=username, lat=lat, long=long, parent=parent, likes=likes, replies=replies, body=body,expire=expire_date)
         post.save()
 
         #Image handling, install python-magic-bin==0.4.14 on local env if on windows 
@@ -145,8 +152,27 @@ def likeHandle(request):
 def sendPost(request):
     lat = float(request.GET.get("lat"))
     long = float(request.GET.get("long"))
-    post = Posts.objects.filter(lat=lat, long=long).order_by("id")
+    post = Posts.objects.filter(lat=lat, long=long,expire=None).order_by("-id")
+    events =  Posts.objects.filter(lat=lat, long=long).exclude(expire=None).order_by("-expire") 
     allPosts = []
+    if events.exists():
+        for e in events:
+            parent_content = {
+                "username": html.escape(e.username),
+                "body": html.escape(e.body),
+                "likes": e.likes,
+                "parent": e.parent,
+                "reply_num": e.replies,
+                "id": e.id,
+                "expire":e.expire,
+            }
+            if not(e.image is None):
+                parent_content["image"] = e.image,
+            if (e.expire !=None):
+                if e.expire <datetime.now(timezone.utc):
+                    e.delete()
+            allPosts.append(parent_content)
+
     if post.exists():
         for p in post:
             parent_content = {
@@ -156,23 +182,10 @@ def sendPost(request):
                 "parent": p.parent,
                 "reply_num": p.replies,
                 "id": p.id,
+                "expire":p.expire,
             }
             if not(p.image is None):
                 parent_content["image"] = p.image,
-            replies = []
-            reply = Posts.objects.filter(parent=p.id).order_by("id").values()
-            for r in reply:
-                reply_content = {
-                    "username": html.escape(r["username"]),
-                    "body": html.escape(r["body"]),
-                    "likes": r["likes"],
-                    "parent": r["parent"],
-                    "reply_num": r["replies"],
-                    "id": r["id"],
-                }
-                replies.append(reply_content)
-
-            parent_content["replies"] = replies
             allPosts.append(parent_content)
 
     return JsonResponse(allPosts, safe=False)
@@ -184,13 +197,16 @@ def sendPins(request):
         pins = list(Pins.objects.values("lat", "long","expire"))
         for p in pins:
             logging.debug(p)
+            pin = Pins.objects.get(lat=p["lat"],long=p["long"])
             if ("expire" in p):
                 if(p["expire"]!=None):
                     logging.debug(p["expire"])
                     if p["expire"]<datetime.now(timezone.utc):
-                        event = Pins.objects.get(lat=p["lat"],long=p["long"])
-                        event.delete()
-        pins = list(Pins.objects.values("lat", "long"))        
+                        pin.expire = None
+                        pin.save()
+            if(Posts.objects.filter(lat=p["lat"],long=p["long"]).count() == 0):
+                pin.delete()
+        pins = list(Pins.objects.values("lat", "long","expire"))        
 
         return JsonResponse({"pins": pins}, status=200)
     return JsonResponse({'error': 'Invalid request method'}, status=405)

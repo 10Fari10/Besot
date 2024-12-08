@@ -25,14 +25,16 @@ function fetchPinsAndReviews() {
     .then(data => {
         if (data.pins) {
             data.pins.forEach(pin => {
-                // console.log(pin.lat)
-                // console.log(pin.long)
-             L.marker([pin.lat, pin.long]).addTo(map)
+             marker = L.marker([pin.lat, pin.long]).addTo(map)
              .bindPopup(`
                 <div>
                     <button id="viewReviewsButton" onclick="viewReviews(${pin.lat}, ${pin.long})">View Reviews</button>
+                    <button id="addReviewButton" onclick = "addReview(${pin.lat}, ${pin.long})">Add Review</button>
                 </div>
                 `);
+                if(pin.expire!=null){
+                    marker._icon.style.filter = "hue-rotate(120deg)"
+                }
             });
         }
     });
@@ -54,6 +56,12 @@ function viewReviews(lat, long) {
     const dynamicContainer = document.getElementById("revcontainer");
     dynamicContainer.innerHTML = "";  
     pasteReviews(lat, long); 
+}
+function addReview(lat, long) {
+    document.getElementById('latVal').value = lat; 
+    document.getElementById('longVal').value = long; 
+    document.getElementById("event").style.display="none";
+    document.getElementById("addPost").style.display = "block";    
 }
 
 document.addEventListener('DOMContentLoaded', fetchPinsAndReviews);

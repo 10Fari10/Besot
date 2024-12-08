@@ -64,6 +64,7 @@ async function send(data_to_send) {
             document.getElementById("longVal").value = '';
             document.getElementById("revVal").value = '';
             document.getElementById("timeToSend").value = '-1';
+            document.getElementById("event").style.display="block";
             popDown();
         } else {
             alert("Failed to create post.");
@@ -111,8 +112,11 @@ function displayReviews(allPosts) {
         const post = allPosts[i];
         const postElement = document.createElement("div");
         postElement.classList.add("pinform");
-
-        
+        console.log("heyyyyyy")
+        console.log(post.expire);
+        if(post.expire !=null){
+            postElement.classList.add("event-post");
+        }
 
         const Elem_user = document.createElement("p");
         Elem_user.textContent = `Reviewed by : ${post.username}`;

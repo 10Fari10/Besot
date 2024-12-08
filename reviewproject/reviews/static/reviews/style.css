@@ -310,3 +310,6 @@ left:25%;
   text-align: center;
 }
 
+.event-post{
+  border: 3px solid hsl(0, 86%, 44%); 
+}
