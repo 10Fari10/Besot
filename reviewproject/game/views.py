@@ -71,7 +71,6 @@ def room(request, room_name):
 def completed_screen(request):
     username = request.user.username
     user_data = UserData.objects.filter(username=username).first()
-    time_final
     if user_data:
         time_final = str.zfill(str(int((user_data.time) / 60)),2) +":"+ str.zfill(str(user_data.time % 60),2)
         user_data_list = UserData.objects.all().exclude(time=None).order_by('time')[:10]
