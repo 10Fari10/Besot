@@ -72,14 +72,13 @@
     </div><br><hr>
 
 <!--introduction-->
-<div class="box">Welcome to Bills of Trails! Explore and review area all over Buffalo, home of the Buffalo Bills!<br>To make a review:<br>1. Click on the place you want tp review on the map<br>2. Complete the review form and hit submit! <br>3. To see your pin or others hit any pin and click "View Reviews"</div>
+<div class="box">Welcome to Bills of Trails! Explore and review area all over Buffalo, home of the Buffalo Bills!<br>To make a review:<br>1. Log-in or register<br>2. Click on the place you want tp review on the map<br>3. Complete the review form and hit submit! <br>4. To see your pin or others hit any pin and click "View Reviews"</div>
 <!--post container,map should be here-->
 <br><br><div class="bodcontainer"><hr>
     <div id="map" style="height: 500px; width: 100%;"></div>
     <script src="{% static 'reviews/map.js' %}"></script>
 </div>
-
-
+<p style="color:white; font-family: 'Montserrat', serif; text-align: center; font-size:18px;"><u><b>Check reviews here!</b></u></p>
 <div class="revcont">
     <div id="revcontainer" class="review-container"></div>
 </div>
@@ -113,8 +112,8 @@
     </form>
 
 </div>
+
         <script src="{% static 'reviews/scripts.js' %}"></script>
-        <script src="{% static 'reviews/leaflet.js' %}"></script>
         <script src ="{% static 'reviews/map.js' %}"></script>
         <script src ="{% static 'reviews/bonusFeature.js' %}"></script>
         <script> var CSRF_TOKEN = '{{ csrf_token }}';</script>

@@ -1,20 +1,29 @@
 
 <html lang="en">
 <head>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lancelot&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poiret+One&display=swap" rel="stylesheet">
     <meta charset="UTF-8">
     <title>Register</title>
 </head>
-<body>
+<style>
+  
+</style>
+<body style="background-color: black; color: white; font-family: 'Montserrat', serif;">
     {% if form.errors %}
         <p>There was an Error with Registering</p>
     {% endif %}
-    <h1>Register</h1>
+    <h1><u>Register</u></h1>
     <br/> <br/>
-    <form action="{% url 'register_user' %}" method="POST">
+    <form  action="{% url 'register_user' %}" method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <br/><br/>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" style=" width: 30%;
+        height:40px; font-size:24px;
+        background-color: black;
+        border-color: white;
+        color:white; font-family: 'Montserrat', serif;
+        border-style: solid;">Submit</button>
     </form>
 </body>
 </html>
