@@ -138,7 +138,6 @@ function displayReviews(allPosts) {
         postElement.appendChild(Elem_likes);
 
         const likeButton = document.createElement("button")
-        likeButton.textContent = "Like"
         likeButton.classList.add("likeBtn")
         likeButton.onclick = () => {
             likesincrement(post.id, Elem_likes)
