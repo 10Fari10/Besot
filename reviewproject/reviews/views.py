@@ -1,30 +1,21 @@
 import base64
-from venv import logger
 
 from django.shortcuts import render, redirect
-from django.utils import timezone
 import json
-from datetime import timedelta
-from django.core.files.base import ContentFile
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
-from django.template import loader
-import redis
 from reviews.models import *
 from django.http import JsonResponse
-from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_protect
+from django.http import HttpResponse
 from django_ratelimit.decorators import ratelimit
 
 from django.core.cache import cache
 
-from django.utils.timezone import now
-import time
 import html
 from PIL import Image
-import filetype
+
+from datetime import timezone,timedelta,datetime
+
 import magic
-import tempfile
 import io
 import os
 
@@ -39,16 +30,14 @@ logging.debug("Logging started on %s for %s" % (logging.root.name, logging.getLe
 
 ratelimit(key='ip', rate='1/10s', block=True)
 
-
 def main_homepage(request):
     ip_address = request.META.get('REMOTE_ADDR')
     rate_limit_key = f'ratelimit_{ip_address}'
     rate_limit_time = cache.get(rate_limit_key)
     if rate_limit_time:
-        if timezone.now() < rate_limit_time + timedelta(seconds=30):
+        if datetime.now() < rate_limit_time + timedelta(seconds=30):
             return HttpResponse('Too Many Request, Try Later', status=429)
-
-    cache.set(rate_limit_key, timezone.now(), timeout=30)
+    cache.set(rate_limit_key, datetime.now(), timeout=30)
     return render(request, 'reviews/homepage.html')
 
 
@@ -70,52 +59,69 @@ def postpfp(request):
         pass
 
 
+@ratelimit(key='ip', rate='50/10s', block=True)
 @csrf_protect
 # Receives post requests from users posting and replying
-@ratelimit(key='ip', rate='50/10s', block=True)
 def postHandle(request):
     if not request.user.is_authenticated:
         return JsonResponse({'error': 'Please Login First'}, status=401)
 
     if request.method == "POST":
-        file_types = {"image/png": ".png", "image/jpeg": ".jpg"}
+        file_types = {"image/png":".png","image/jpeg":".jpg"}
         req_body = json.loads(request.body.decode())
-
-        lat = float(req_body["latVal"])
-        long = float(req_body["longVal"])
+        
+        lat = round(float(req_body["latVal"]),3)
+        long = round(float(req_body["longVal"]),3)
         body = req_body.get("review", "")
         parent = req_body.get("parent", -1)
         likes = req_body.get("likes", 0)
         replies = req_body.get("replies", 0)
+        time = int(req_body.get("time"))
+        expire_date=None
+
+        if(time > 0 and time <=60):
+            expire_date = datetime.now(timezone.utc) + timedelta(minutes=time)
 
         print(f"Creating pin at Latitude: {lat}, Longitude: {long}")
-        pin = Pins(lat=lat, long=long)
-        pin.save()
+
+        if(Pins.objects.filter(lat=lat,long=long).count() == 0):
+            pin = Pins(lat=lat, long=long,expire=expire_date)
+            pin.save()
+        else:
+            pin = Pins.objects.get(lat=lat,long=long)
+            if (expire_date!=None):
+                if (pin.expire !=None): 
+                    if(pin.expire < expire_date):
+                        pin.expire = expire_date
+                else:
+                    pin.expire = expire_date
+                pin.save()
+            
         username = request.user.get_username()
-        post = Posts(username=username, lat=lat, long=long, parent=parent, likes=likes, replies=replies, body=body)
+        post = Posts(username=username, lat=lat, long=long, parent=parent, likes=likes, replies=replies, body=body,expire=expire_date)
         post.save()
 
-        # Image handling, install python-magic-bin==0.4.14 on local env if on windows
-        if ("img" in req_body):
+        #Image handling, install python-magic-bin==0.4.14 on local env if on windows 
+        if("img" in req_body):
             img = req_body["img"]
             img = base64.b64decode(img)
-            img_name = "image" + str(post.id)
+            img_name = "image"+str(post.id)
             path = "/home/app/web/media/"
 
-            with open(path + img_name, "wb") as file:
+            with open(path+img_name, "wb") as file:
                 file.write(img)
-            mime = magic.from_file(path + img_name, mime=True)
-            if mime in file_types:
+            mime = magic.from_file(path+img_name, mime=True)
+            if mime  in file_types:
                 new_name = img_name + file_types[mime]
-                im = Image.open(io.BytesIO(img))
-                size = (240, 240)
+                im= Image.open(io.BytesIO(img))
+                size = (240,240)
                 im.thumbnail(size)
-                im.save(path + new_name)
-                post.image = "/media/" + new_name
+                im.save(path+new_name)
+                post.image= "/media/"+new_name
             else:
                 post.image = None
-            os.remove(path + img_name)
-
+            os.remove(path+img_name)
+        
         post.save()
 
         if parent != -1:
@@ -124,15 +130,14 @@ def postHandle(request):
             parent_post.save()
 
         SendPins = list(Pins.objects.values("lat", "long"))
-
+    
         return JsonResponse({"message": "Post created successfully!", "pins": SendPins}, status=201)
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
-
+@ratelimit(key='ip', rate='50/10s', block=True)
 @csrf_protect
 # Receives post requests from users liking
-@ratelimit(key='ip', rate='50/10s', block=True)
 def likeHandle(request):
     if request.method == "POST":
         req_body = request.body.decode()
@@ -155,16 +160,34 @@ def likeHandle(request):
 
     return JsonResponse({"error": "Post not found"}, status=404)
 
-
+@ratelimit(key='ip', rate='50/10s', block=True)
 @csrf_protect
 # Receives get requests and sends posts from specified location to front end
 # Make a post on front end. Send post data to backend. Backend saves to pins database. Sends list of pin back. Front end renders all pins. When pin is clicked, sends request to backed. Backends sends all post data.
-@ratelimit(key='ip', rate='50/10s', block=True)
 def sendPost(request):
     lat = float(request.GET.get("lat"))
     long = float(request.GET.get("long"))
-    post = Posts.objects.filter(lat=lat, long=long).order_by("id")
+    post = Posts.objects.filter(lat=lat, long=long,expire=None).order_by("-id")
+    events =  Posts.objects.filter(lat=lat, long=long).exclude(expire=None).order_by("-expire") 
     allPosts = []
+    if events.exists():
+        for e in events:
+            parent_content = {
+                "username": html.escape(e.username),
+                "body": html.escape(e.body),
+                "likes": e.likes,
+                "parent": e.parent,
+                "reply_num": e.replies,
+                "id": e.id,
+                "expire":e.expire,
+            }
+            if not(e.image is None):
+                parent_content["image"] = e.image,
+            if (e.expire !=None):
+                if e.expire <datetime.now(timezone.utc):
+                    e.delete()
+            allPosts.append(parent_content)
+
     if post.exists():
         for p in post:
             parent_content = {
@@ -174,38 +197,31 @@ def sendPost(request):
                 "parent": p.parent,
                 "reply_num": p.replies,
                 "id": p.id,
+                "expire":p.expire,
             }
-            if not (p.image is None):
+            if not(p.image is None):
                 parent_content["image"] = p.image,
-            replies = []
-            reply = Posts.objects.filter(parent=p.id).order_by("id").values()
-            for r in reply:
-                reply_content = {
-                    "username": html.escape(r["username"]),
-                    "body": html.escape(r["body"]),
-                    "likes": r["likes"],
-                    "parent": r["parent"],
-                    "reply_num": r["replies"],
-                    "id": r["id"],
-                }
-                replies.append(reply_content)
-
-            parent_content["replies"] = replies
             allPosts.append(parent_content)
 
     return JsonResponse(allPosts, safe=False)
-
 
 @ratelimit(key='ip', rate='50/10s', block=True)
 @csrf_protect
 def sendPins(request):
     if request.method == "GET":
-        pins = list(Pins.objects.values("lat", "long"))
+        pins = list(Pins.objects.values("lat", "long","expire"))
+        for p in pins:
+            logging.debug(p)
+            pin = Pins.objects.get(lat=p["lat"],long=p["long"])
+            if ("expire" in p):
+                if(p["expire"]!=None):
+                    logging.debug(p["expire"])
+                    if p["expire"]<datetime.now(timezone.utc):
+                        pin.expire = None
+                        pin.save()
+            if(Posts.objects.filter(lat=p["lat"],long=p["long"]).count() == 0):
+                pin.delete()
+        pins = list(Pins.objects.values("lat", "long","expire"))        
+
         return JsonResponse({"pins": pins}, status=200)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-
-# @ratelimit(key='ip', rate='50/10s', block=True)
-# def my_view(request):
-#     if getattr(request, 'limited', False):
-#         return JsonResponse({"error": "Too many requests. Please try again later."}, status=429)

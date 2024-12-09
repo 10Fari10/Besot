@@ -25,13 +25,14 @@ function fetchPinsAndReviews() {
     .then(data => {
         if (data.pins) {
             data.pins.forEach(pin => {
-             marker = L.marker([pin.lat, pin.long]).addTo(map)
+             var marker = L.marker([pin.lat, pin.long]).addTo(map)
              .bindPopup(`
                 <div>
                     <button id="viewReviewsButton" onclick="viewReviews(${pin.lat}, ${pin.long})">View Reviews</button>
                     <button id="addReviewButton" onclick = "addReview(${pin.lat}, ${pin.long})">Add Review</button>
                 </div>
                 `);
+                console.log(pin.expire);
                 if(pin.expire!=null){
                     marker._icon.style.filter = "hue-rotate(120deg)"
                 }
@@ -41,7 +42,7 @@ function fetchPinsAndReviews() {
 }
         
 
-var marker;
+
 
 function x_marks_the_spot(x) {
     const lat = x.latlng.lat; 
