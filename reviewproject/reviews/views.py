@@ -14,6 +14,7 @@ import html
 from PIL import Image
 
 from datetime import timezone,timedelta,datetime
+from django.utils import timezone as tz
 
 import magic
 import io
@@ -32,12 +33,12 @@ ratelimit(key='ip', rate='1/10s', block=True)
 
 def main_homepage(request):
     ip_address = request.META.get('REMOTE_ADDR')
-    rate_limit_key = f'ratelimit_{ip_address}'
+    rate_limit_key = f'ratelimit{ip_address}'
     rate_limit_time = cache.get(rate_limit_key)
     if rate_limit_time:
-        if datetime.now() < rate_limit_time + timedelta(seconds=30):
+        if tz.now() < rate_limit_time + timedelta(seconds=30):
             return HttpResponse('Too Many Request, Try Later', status=429)
-    cache.set(rate_limit_key, datetime.now(), timeout=30)
+    cache.set(rate_limit_key, tz.now(), timeout=10)
     return render(request, 'reviews/homepage.html')
 
 
