@@ -89,7 +89,8 @@ class GameConsumer(WebsocketConsumer):
             logging.debug(min)
             logging.debug(sc)
          
-            user_data_list = UserData.objects.all().exclude(time=None).order_by('time')[:10]
+            user_data_list = UserData.objects.all().exclude(time=None).order_by('time')
+            user_current = UserData.objects.filter(time=None).order_by('-start')
             username = []
             t = []
             for u in user_data_list:
@@ -98,8 +99,17 @@ class GameConsumer(WebsocketConsumer):
                 l_sc= u.time % 60
                 l_time_final = str.zfill(str(l_min),2) +":"+ str.zfill(str(l_sc),2)
                 t.append(l_time_final)
-            logging.debug(json.dumps({"min": min, "sc": sc, "leader_user": username, "leader_time": t}))
-            self.send(json.dumps({"time":True,"min": min, "sc": sc, "leader_user": username, "leader_time": t}))
+            
+            for u in user_current:
+                other_elapsed_time = (datetime.now(timezone.utc) - u.start).seconds
+                other_min = int(elapsed_time / 60)
+                other_sc= other_elapsed_time % 60
+
+                username.append(u.username)
+                other_time_final = str.zfill(str(other_min),2) +":"+ str.zfill(str(other_sc),2)
+                t.append(other_time_final)
+            logging.debug(json.dumps({"min": min, "sc": sc, "leader_user": username[:10], "leader_time": t[:10]}))
+            self.send(json.dumps({"time":True,"min": min, "sc": sc, "leader_user": username[:10], "leader_time": t[:10]}))
 
     def chat_message(self, event):
         rankings = event["rankings"]

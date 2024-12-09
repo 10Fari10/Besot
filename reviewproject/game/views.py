@@ -71,6 +71,7 @@ def room(request, room_name):
 def completed_screen(request):
     username = request.user.username
     user_data = UserData.objects.filter(username=username).first()
+    time_final
     if user_data:
         time_final = str.zfill(str(int((user_data.time) / 60)),2) +":"+ str.zfill(str(user_data.time % 60),2)
         user_data_list = UserData.objects.all().exclude(time=None).order_by('time')[:10]
@@ -79,4 +80,4 @@ def completed_screen(request):
         for u in user_data_list:
             t_final = str.zfill(str(int((u.time) / 60)),2) +":"+ str.zfill(str(u.time % 60),2)
             leaderboard.append((u.username, t_final))
-    return render(request, "game/completed_screen.html", {'time': time_final,'leaderboard': leaderboard})
+        return render(request, "game/completed_screen.html", {'time': time_final,'leaderboard': leaderboard})
