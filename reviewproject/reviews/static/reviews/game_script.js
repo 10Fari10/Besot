@@ -16,7 +16,7 @@ game_socket.onopen = function() {
 };
 game_socket.onmessage = function(e) {
     const data = JSON.parse(e.data);
-    if (data){
+    if (Object.hasOwn(data,"time")){
         console.log(data.min);
         console.log(data.sc);
         document.getElementById("minutes").innerHTML = data.min.toString().padStart(2,"0");
@@ -30,6 +30,8 @@ game_socket.onmessage = function(e) {
             leaderboard_div.appendChild(user)
         }
     }
+    console.log("WAAAA")
+    console.log(data)
     if (data.correct && data.redirect) {
     window.location.href = "/completed_screen"; 
     }else if (data.correct === false) {

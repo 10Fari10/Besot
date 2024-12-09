@@ -61,11 +61,11 @@ class GameConsumer(WebsocketConsumer):
                     user.time = total_time
                     user.save()
                     user_data_list = UserData.objects.all().order_by('time')[:10]
-                    self.send(text_data=json.dumps({"correct": True, "redirect": "completed_screen"}))
+                    self.send(json.dumps({"correct": True, "redirect": "completed_screen"}))
                     logging.debug("Correct solution")
                 else:
                     user_data_list = UserData.objects.all().order_by('time')[:10]
-                    self.send(text_data=json.dumps({"correct": False, "reset": True}))
+                    self.send(json.dumps({"correct": False, "reset": True}))
                     logging.debug("Incorrect solution")
 
             # Get rankings and send them
@@ -99,7 +99,7 @@ class GameConsumer(WebsocketConsumer):
                 l_time_final = str.zfill(str(l_min),2) +":"+ str.zfill(str(l_sc),2)
                 t.append(l_time_final)
             logging.debug(json.dumps({"min": min, "sc": sc, "leader_user": username, "leader_time": t}))
-            self.send(json.dumps({"min": min, "sc": sc, "leader_user": username, "leader_time": t}))
+            self.send(json.dumps({"time":True,"min": min, "sc": sc, "leader_user": username, "leader_time": t}))
 
     def chat_message(self, event):
         rankings = event["rankings"]

@@ -37,6 +37,7 @@ def index(request):
 #If verified, query is made to user table and all users with matching lobby are pulled, sorted by time, and sent
 
 def room(request, room_name):
+    username = request.user.username
     mapSolutions = {"alpha":"r1,r2,r3,r4,r5,r6,r7,r8"}
     mapLayouts = {
         "alpha": {
@@ -58,11 +59,14 @@ def room(request, room_name):
         
         #Store and send pin location/id by lobby name on load, sample below
         #if(MapData.objects.filter(lobbyID=room_name).count() ==0):
-             map = MapData(lobbyID = room_name, pinLocations = mapLayouts[room_name],solution=mapSolutions[room_name])
-             map.save()
-             map_layout = mapLayouts[room_name]
-             
-             return render(request, "game/room.html", {'map_layout': map_layout, 'room_name': room_name})
+        map = MapData(lobbyID = room_name, pinLocations = mapLayouts[room_name],solution=mapSolutions[room_name])
+        map.save()
+        map_layout = mapLayouts[room_name]
+        user_data = UserData.objects.filter(username=username).first()
+        if user_data and user_data.time!=None:
+            return render(request, 'reviews/homepage.html')
+        else:
+            return render(request, "game/room.html", {'map_layout': map_layout, 'room_name': room_name})
 
 def completed_screen(request):
     username = request.user.username
