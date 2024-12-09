@@ -11,3 +11,4 @@ channels
 channels_redis
 daphne
 django_ratelimit
+django-redis

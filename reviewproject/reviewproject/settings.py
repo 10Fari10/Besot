@@ -36,6 +36,9 @@ ALLOWED_HOSTS = ["localhost",'web',"137.184.156.82","billsoftrails.com"]
 
 
 # Application definition
+RATELIMIT_KEY = 'ip'
+RATELIMIT_RATE = '50/10s'
+RATELIMIT_USE_CACHE = 'default'
 
 INSTALLED_APPS = [
     'daphne',
@@ -48,20 +51,23 @@ INSTALLED_APPS = [
     'reviews',
     'users',
     'game',
+    'django_ratelimit',
     
 ]
 
 MIDDLEWARE = [
+    'django.middleware.common.CommonMiddleware',
+    'django_ratelimit.middleware.RatelimitMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-]
 
+
+]
 ROOT_URLCONF = 'reviewproject.urls'
 
 TEMPLATES = [
@@ -162,3 +168,15 @@ MEDIA_URL = '/media/'
 CSRF_TRUSTED_ORIGINS = ['https://localhost',"https://billsoftrails.com"]
 TIME_ZONE = 'America/New_York'
 USE_TZ = True
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}
+# RATELIMIT_VIEW = 'reviews.views.ratelimit_view'
+RATELIMIT_USE_CACHE = 'default'
