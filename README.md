@@ -10,7 +10,7 @@
   given the clue
 - Once user gets the correct solution, every player in the room is notified live and the leaderboard is updated
 - User with the shortest time is at the top of the leaderboard
-- For testing purposes, solution is r1->r2->r3->r4
+- For testing purposes, solution is r1->r2->r3->r4->r5->r6->r7->r8
 ### Timing
 - The time the users takes to complete the game is tracked
 - The user is shown the top times and live times of other users
