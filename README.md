@@ -24,8 +24,8 @@
 - The pin will delete itself after that time if no other reviews are on it
 - If there are, it will revert to the regular color
 
-## Testing Procedure
-1. Go the deployed website and register an account
+### Testing Procedure
+1. Go to the deployed website and register an account
 2. Click on a point on the map and type a review
 3. Click the event pin button and accept the pop up giving location access
 4. Wait for the time slider to pop up
